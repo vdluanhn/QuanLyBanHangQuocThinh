@@ -15,11 +15,12 @@ namespace AccountingLiabilities
         public FrmCheckDon()
         {
             InitializeComponent();
-            datePickStart.Value = DateTime.Now.AddDays(-90);
+            datePickStart.Value = DateTime.Now.AddDays(-30);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            lbKQTK.Text = "";
             var item = cbCheckCondition.Text;
             Console.WriteLine(item);
             var startDate = datePickStart.Value.AddDays(-1);
@@ -47,6 +48,11 @@ namespace AccountingLiabilities
                                 phi_hoan_tra=dsvc.refund_fee, thanhtien = dsvc.amount
                             };
                 datas = datas.Where(x => x.ngay_doi_soat > startDate && x.ngay_doi_soat < endDate);
+                var maDonHang = txtMaDonHang.Text.Trim();
+                if (maDonHang!=null && maDonHang!="")
+                {
+                    datas = datas.Where(x => x.code == maDonHang);
+                }
 
                 switch (item)
                 {
@@ -77,12 +83,16 @@ namespace AccountingLiabilities
                         dataGridView1.DataSource = data4.ToList();
 
                         break;
+                    case "Tất cả":
+                        dataGridView1.DataSource = datas.ToList();
+
+                        break;
                     default:
                         dataGridView1.DataSource = datas.ToList();
 
                         break;
                 }
-                MessageBox.Show("Đã tìm thấy "+ dataGridView1.Rows.Count + " kết quả!");
+                lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
             }
 
         }
