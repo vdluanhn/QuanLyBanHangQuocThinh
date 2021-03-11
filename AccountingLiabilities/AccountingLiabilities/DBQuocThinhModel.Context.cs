@@ -25,6 +25,8 @@ namespace AccountingLiabilities
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<DonDaHoanTraThucTe> DonDaHoanTraThucTes { get; set; }
+        public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<DoiSoatVanChuyen> DoiSoatVanChuyens { get; set; }
         public virtual DbSet<DonDi> DonDis { get; set; }
     }

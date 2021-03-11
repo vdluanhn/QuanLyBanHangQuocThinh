@@ -59,6 +59,7 @@
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.Linq" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Xml.Linq" />
@@ -90,6 +91,9 @@
     <Compile Include="DoiSoatVanChuyen.cs">
       <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DonDaHoanTraThucTe.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="DonDi.cs">
       <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
     </Compile>
@@ -107,6 +111,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="sysdiagram.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Utilities\DBSQLServerUtils.cs" />
     <Compile Include="Utilities\DBUtils.cs" />
     <Compile Include="Utilities\ExportToExcel.cs" />

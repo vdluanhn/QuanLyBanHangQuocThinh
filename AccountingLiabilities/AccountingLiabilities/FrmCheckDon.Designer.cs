@@ -35,14 +35,14 @@
             this.btnImportData = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.datePickStart = new System.Windows.Forms.DateTimePicker();
-            this.datePickerEnd = new System.Windows.Forms.DateTimePicker();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.txtMaDonHang = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.datePickerEnd = new System.Windows.Forms.DateTimePicker();
+            this.datePickStart = new System.Windows.Forms.DateTimePicker();
             this.lbKQTK = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -57,7 +57,8 @@
             "Đơn đã hoàn thành",
             "Đơn hoàn trả và có phí thu hộ",
             "Đơn hoàn trả và không có phí thu hộ",
-            "Đơn hoàn thực tế",
+            "Chưa hoàn thực tế",
+            "Đã hoàn thực tế",
             "Mã đơn hàng của ĐVVC không tồn tại"});
             this.cbCheckCondition.Location = new System.Drawing.Point(200, 19);
             this.cbCheckCondition.Name = "cbCheckCondition";
@@ -131,43 +132,12 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tìm kiếm";
             // 
-            // datePickStart
+            // txtMaDonHang
             // 
-            this.datePickStart.CustomFormat = "dd/MM/yyyy";
-            this.datePickStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.datePickStart.Location = new System.Drawing.Point(200, 47);
-            this.datePickStart.Name = "datePickStart";
-            this.datePickStart.Size = new System.Drawing.Size(132, 20);
-            this.datePickStart.TabIndex = 2;
-            // 
-            // datePickerEnd
-            // 
-            this.datePickerEnd.CustomFormat = "dd/MM/yyyy";
-            this.datePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.datePickerEnd.Location = new System.Drawing.Point(400, 47);
-            this.datePickerEnd.Name = "datePickerEnd";
-            this.datePickerEnd.Size = new System.Drawing.Size(132, 20);
-            this.datePickerEnd.TabIndex = 2;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(79, 54);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(73, 13);
-            this.label1.TabIndex = 3;
-            this.label1.Text = "Ngày đối soát";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(174, 53);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(20, 13);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "Từ";
-            this.label2.Click += new System.EventHandler(this.label1_Click);
+            this.txtMaDonHang.Location = new System.Drawing.Point(200, 74);
+            this.txtMaDonHang.Name = "txtMaDonHang";
+            this.txtMaDonHang.Size = new System.Drawing.Size(332, 20);
+            this.txtMaDonHang.TabIndex = 4;
             // 
             // label3
             // 
@@ -179,6 +149,16 @@
             this.label3.Text = "Đến";
             this.label3.Click += new System.EventHandler(this.label1_Click);
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(174, 53);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(20, 13);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "Từ";
+            this.label2.Click += new System.EventHandler(this.label1_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -189,13 +169,6 @@
             this.label4.Text = "Trạng thái đơn";
             this.label4.Click += new System.EventHandler(this.label1_Click);
             // 
-            // txtMaDonHang
-            // 
-            this.txtMaDonHang.Location = new System.Drawing.Point(200, 74);
-            this.txtMaDonHang.Name = "txtMaDonHang";
-            this.txtMaDonHang.Size = new System.Drawing.Size(332, 20);
-            this.txtMaDonHang.TabIndex = 4;
-            // 
             // label5
             // 
             this.label5.AutoSize = true;
@@ -205,6 +178,34 @@
             this.label5.TabIndex = 3;
             this.label5.Text = "Mã đơn hàng";
             this.label5.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(79, 54);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 3;
+            this.label1.Text = "Ngày đối soát";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
+            // 
+            // datePickerEnd
+            // 
+            this.datePickerEnd.CustomFormat = "dd/MM/yyyy";
+            this.datePickerEnd.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.datePickerEnd.Location = new System.Drawing.Point(400, 47);
+            this.datePickerEnd.Name = "datePickerEnd";
+            this.datePickerEnd.Size = new System.Drawing.Size(132, 20);
+            this.datePickerEnd.TabIndex = 2;
+            // 
+            // datePickStart
+            // 
+            this.datePickStart.CustomFormat = "dd/MM/yyyy";
+            this.datePickStart.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.datePickStart.Location = new System.Drawing.Point(200, 47);
+            this.datePickStart.Name = "datePickStart";
+            this.datePickStart.Size = new System.Drawing.Size(132, 20);
+            this.datePickStart.TabIndex = 2;
             // 
             // lbKQTK
             // 

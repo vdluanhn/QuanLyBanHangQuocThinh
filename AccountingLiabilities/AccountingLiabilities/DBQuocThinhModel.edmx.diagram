@@ -5,8 +5,10 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="1b325e119eea482f8175d5eb47b64bcb" Name="Diagram1">
-        <EntityTypeShape EntityType="EntityDBQuocThinhModel.DoiSoatVanChuyen" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EntityDBQuocThinhModel.DonDi" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="EntityDBQuocThinhModel.DonDaHoanTraThucTe" Width="1.5" PointX="0.75" PointY="4.75" />
+        <EntityTypeShape EntityType="EntityDBQuocThinhModel.sysdiagram" Width="1.5" PointX="3.375" PointY="4.75" />
+        <EntityTypeShape EntityType="EntityDBQuocThinhModel.DoiSoatVanChuyen" Width="1.5" PointX="5.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EntityDBQuocThinhModel.DonDi" Width="1.5" PointX="0.75" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

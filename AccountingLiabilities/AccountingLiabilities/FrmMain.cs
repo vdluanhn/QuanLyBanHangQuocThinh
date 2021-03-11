@@ -55,6 +55,7 @@ namespace AccountingLiabilities
                             reader.Close();
 
                         }
+                        lbTenFile.Text = Path.GetFileName(ofd.FileName); 
                     }
                 }
             }catch(Exception ex)
@@ -108,6 +109,7 @@ namespace AccountingLiabilities
                 item.finish_date = dtPickerDS.Value;
                 item.code_shop = row.Cells["Mã đơn hàng shop"].Value == null ? "" : row.Cells["Mã đơn hàng shop"].Value.ToString();
                 item.amount = Convert.ToInt32(row.Cells["Thanh toán"].Value);
+               
                 item.created_date = DateTime.Now;
                 lstData.Add(item);
             }
@@ -117,6 +119,28 @@ namespace AccountingLiabilities
             DBHelper.InsertDoiSoatVanChuyens(lstData);
 
             MessageBox.Show("Import danh sách thành công "+lstData.Count+" (đơn hàng)!");
+        }
+
+        private void btnDonHOanThucTe_Click(object sender, EventArgs e)
+        {
+            var listData = dataGridView1.DataSource;
+            Console.WriteLine(dataGridView1.Rows.Count);
+            List<DonDaHoanTraThucTe> lstData = new List<DonDaHoanTraThucTe>();
+            foreach (DataGridViewRow row in dataGridView1.Rows)
+            {
+                var item = new DonDaHoanTraThucTe();
+                item.sub_code = row.Cells["Mã đơn hàng"].Value == null ? "" : row.Cells["Mã đơn hàng"].Value.ToString();
+                item.org_delivery = txtDoiTac.Text.Trim();
+                item.cross_check_date = dtPickerDS.Value;
+                item.created_date = DateTime.Now;
+                lstData.Add(item);
+            }
+            Console.WriteLine(lstData.Count);
+
+
+            DBHelper.InsertDonHoanTraThucTes(lstData);
+
+            MessageBox.Show("Import danh sách thành công " + lstData.Count + " (đơn hàng)!");
         }
     }
 }

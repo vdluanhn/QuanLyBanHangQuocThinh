@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Linq.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -20,80 +21,110 @@ namespace AccountingLiabilities
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
-            lbKQTK.Text = "";
-            var item = cbCheckCondition.Text;
-            Console.WriteLine(item);
-            var startDate = datePickStart.Value.AddDays(-1);
-            var endDate = datePickerEnd.Value.AddDays(1);
-            //var obj = DBHelper.SelectDonDiHoanThanh();
-            using (var db = new DBQuocThinhEntities())
+            try
             {
-                //from c in table0
-                //join o in table1 on c.sno equals o.sno into ps
-                //from o in ps.DefaultIfEmpty()
-                //select new { c.name, o.number }
-                var datas = from d in db.DonDis
-                            join dsvc in db.DoiSoatVanChuyens on d.code equals dsvc.code into ljoin
-
-                            from dsvc in ljoin.DefaultIfEmpty() orderby d.id descending
-                            select new { 
-                                d.code, d.amount, d.cust_name, d.cust_address, d.cust_mobile, d.description, d.out_date,
-                                status_name = dsvc.code == null?"Mã đơn hàng của ĐVVC không tồn tại":
-                                            (dsvc.code != null && dsvc.collection_amount > 0 && dsvc.refund_fee == 0) ?"Đơn hoàn thành" :
-                                            (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount > 0) ? "Đơn hoàn trả và có phí thu hộ" :
-                                            (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount<=0) ? "Đơn hoàn trả và không có phí thu hộ" : "Chưa xác định"
-                                            , tien_thu_ho=dsvc.collection_amount,
-                                            ngay_nhap_soi_soat = dsvc.created_date, ngay_doi_soat = dsvc.finish_date, 
-                                thanh_toan_du = (dsvc.code != null && dsvc.collection_amount > 0 && d.amount== dsvc.collection_amount) ? "Thanh toán đủ":"Lệch tiền (tiền đơn hàng - tiền thu hộ): "+(d.amount - dsvc.collection_amount) +" ",
-                                phi_hoan_tra=dsvc.refund_fee, thanhtien = dsvc.amount
-                            };
-                datas = datas.Where(x => x.ngay_doi_soat > startDate && x.ngay_doi_soat < endDate);
-                var maDonHang = txtMaDonHang.Text.Trim();
-                if (maDonHang!=null && maDonHang!="")
+                lbKQTK.Text = "";
+                var item = cbCheckCondition.Text;
+                Console.WriteLine(item);
+                var startDate = datePickStart.Value.AddDays(-1);
+                var endDate = datePickerEnd.Value.AddDays(1);
+                //var obj = DBHelper.SelectDonDiHoanThanh();
+                using (var db = new DBQuocThinhEntities())
                 {
-                    datas = datas.Where(x => x.code == maDonHang);
-                }
+                    //from c in table0
+                    //join o in table1 on c.sno equals o.sno into ps
+                    //from o in ps.DefaultIfEmpty()
+                    //select new { c.name, o.number }
+                    var datas = from d in db.DonDis
 
-                switch (item)
-                {
-                    case "Đơn đã hoàn thành":
-                        var data = datas.Where(x => x.status_name == "Đơn hoàn thành");
-                        dataGridView1.DataSource = data.ToList();
-                        break;
-                    case "Đơn hoàn trên danh sách ĐVVC gửi":
+                                join dsvc in db.DoiSoatVanChuyens on d.code equals dsvc.code into ljoin
+                                from dsvc in ljoin.DefaultIfEmpty()
+
+                                join dht in db.DonDaHoanTraThucTes on d.code.Substring(d.code.Length-9) equals dht.sub_code into ljoin1
+                                from dht in ljoin1.DefaultIfEmpty()
+
+                                orderby d.id descending
+                                select new
+                                {
+                                    d.code,
+                                    d.amount,
+                                    d.cust_name,
+                                    d.cust_address,
+                                    d.cust_mobile,
+                                    d.description,
+                                    d.out_date,
+                                    status_name = dsvc.code == null ? "Mã đơn hàng của ĐVVC không tồn tại" :
+                                                (dsvc.code != null && dsvc.collection_amount > 0 && dsvc.refund_fee == 0) ? "Đơn hoàn thành" :
+                                                (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount > 0) ? "Đơn hoàn trả và có phí thu hộ" :
+                                                (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount <= 0) ? "Đơn hoàn trả và không có phí thu hộ" :
+                                                (dsvc.code != null && dht.sub_code != null && dsvc.refund_fee > 0) ? "Đã hoàn thực tế" :
+                                                "Chưa xác định"
+                                                ,
+                                    tien_thu_ho = dsvc.collection_amount,
+                                    ngay_nhap_soi_soat = dsvc.created_date,
+                                    ngay_doi_soat = dsvc.finish_date,
+                                    thanh_toan_du = (dsvc.code != null && dsvc.collection_amount > 0 && d.amount == dsvc.collection_amount) ? "Thanh toán đủ" : "Lệch tiền (tiền đơn hàng - tiền thu hộ): " + (d.amount - dsvc.collection_amount) + " ",
+                                    phi_hoan_tra = dsvc.refund_fee,
+                                    thanhtien = dsvc.amount, don_hoan_thuc_te=dht.sub_code!=null?"Đã hoàn thực tế":"Chưa hoàn thực tế"
+                                };
+                    datas = datas.Where(x => x.ngay_doi_soat > startDate && x.ngay_doi_soat < endDate);
+                    var maDonHang = txtMaDonHang.Text.Trim();
+                    if (maDonHang != null && maDonHang != "")
+                    {
+                        datas = datas.Where(x => x.code == maDonHang);
+                    }
+
+                    switch (item)
+                    {
+                        case "Đơn đã hoàn thành":
+                            var data = datas.Where(x => x.status_name == "Đơn hoàn thành");
+                            dataGridView1.DataSource = data.ToList();
+                            break;
+                        case "Đơn hoàn trên danh sách ĐVVC gửi":
                             var data1 = datas.Where(x => x.status_name == "Đơn hoàn trả");
                             dataGridView1.DataSource = data1.ToList();
 
                             break;
-                    case "Đơn hoàn thực tế":
-                            var data2 = datas.Where(x => x.status_name == "Chưa xác định");
+                        case "Đã hoàn thực tế":
+                            var data2 = datas.Where(x => x.don_hoan_thuc_te == "Đã hoàn thực tế");
                             dataGridView1.DataSource = data2.ToList();
 
-                        break;
-                    case "Mã đơn hàng của ĐVVC không tồn tại":
-                        var data3 = datas.Where(x => x.status_name == "Mã đơn hàng của ĐVVC không tồn tại");
-                        dataGridView1.DataSource = data3.ToList();
-                        break;
-                    case "Đơn hoàn trả và có phí thu hộ":
-                        var data5 = datas.Where(x => x.status_name == "Đơn hoàn trả và có phí thu hộ");
-                        dataGridView1.DataSource = data5.ToList();
-                        break;
-                    case "Đơn hoàn trả và không có phí thu hộ":
-                        var data4 = datas.Where(x => x.status_name == "Đơn hoàn trả và không có phí thu hộ");
-                        dataGridView1.DataSource = data4.ToList();
+                            break;
+                        case "Chưa hoàn thực tế":
+                            var data21 = datas.Where(x => x.don_hoan_thuc_te == "Chưa hoàn thực tế");
+                            dataGridView1.DataSource = data21.ToList();
 
-                        break;
-                    case "Tất cả":
-                        dataGridView1.DataSource = datas.ToList();
+                            break;
+                        case "Mã đơn hàng của ĐVVC không tồn tại":
+                            var data3 = datas.Where(x => x.status_name == "Mã đơn hàng của ĐVVC không tồn tại");
+                            dataGridView1.DataSource = data3.ToList();
+                            break;
+                        case "Đơn hoàn trả và có phí thu hộ":
+                            var data5 = datas.Where(x => x.status_name == "Đơn hoàn trả và có phí thu hộ");
+                            dataGridView1.DataSource = data5.ToList();
+                            break;
+                        case "Đơn hoàn trả và không có phí thu hộ":
+                            var data4 = datas.Where(x => x.status_name == "Đơn hoàn trả và không có phí thu hộ");
+                            dataGridView1.DataSource = data4.ToList();
 
-                        break;
-                    default:
-                        dataGridView1.DataSource = datas.ToList();
+                            break;
+                        case "Tất cả":
+                            dataGridView1.DataSource = datas.ToList();
 
-                        break;
+                            break;
+                        default:
+                            dataGridView1.DataSource = datas.ToList();
+
+                            break;
+                    }
+                    lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
                 }
-                lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
             }
+            catch (Exception ex)
+            {
+                    System.Windows.Forms.MessageBox.Show("Dốt, lỗi rồi: " + ex.ToString());
+            }
+            
 
         }
 

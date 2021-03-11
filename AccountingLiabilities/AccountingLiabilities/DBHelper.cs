@@ -95,6 +95,44 @@ namespace AccountingLiabilities
             
         }
 
+        public static void InsertDonHoanTraThucTes(List<DonDaHoanTraThucTe> donDaHoanTraThucTes)
+        {
+            DonDaHoanTraThucTe itemCur = new DonDaHoanTraThucTe();
+            try
+            {
+                using (var db = new DBQuocThinhEntities())
+                {
+                    foreach (var item in donDaHoanTraThucTes)
+                    {
+                        if (item.sub_code == null || item.sub_code.Trim() == "")
+                        {
+                            Console.WriteLine("Don hang ko co ma don, bo qua ko insert");
+                            continue;
+                        }
+                        var check = db.DonDaHoanTraThucTes.Where(x => x.sub_code.Trim() == item.sub_code.Trim()).FirstOrDefault<DonDaHoanTraThucTe>();
+                        if (check != null)
+                        {
+                            Console.WriteLine("Trung ma don hang: " + check.sub_code + ". Se xoa ma don hang hiện tại và insert mới");
+                            db.DonDaHoanTraThucTes.Remove(check);
+                            db.SaveChanges();
+                        }
+                        db.DonDaHoanTraThucTes.Add(item);
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                string msg = ex.InnerException.InnerException.Message;
+                if (msg.Contains("Violation of PRIMARY KEY constraint"))
+                {
+                    MessageBox.Show("Danh sách mã đơn hàng đã được thêm vào trước đó.");
+                }
+                else
+                    System.Windows.Forms.MessageBox.Show("Loi: " + ex.ToString());
+            }
+
+        }
         public static Object SelectDonDiHoanThanh()
         {
             using (var db = new DBQuocThinhEntities())
