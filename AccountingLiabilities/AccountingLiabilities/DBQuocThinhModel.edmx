@@ -18,6 +18,7 @@
           <Property Name="amount" Type="numeric" Precision="18" Scale="0" />
           <Property Name="created_date" Type="datetime" />
           <Property Name="code_shop" Type="nvarchar" MaxLength="50" />
+          <Property Name="partners" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DonDaHoanTraThucTe">
           <Key>
@@ -28,6 +29,7 @@
           <Property Name="created_date" Type="datetime" />
           <Property Name="org_delivery" Type="nvarchar" MaxLength="50" />
           <Property Name="cross_check_date" Type="date" />
+          <Property Name="partners" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="DonDi">
           <Key>
@@ -43,6 +45,7 @@
           <Property Name="out_date" Type="date" />
           <Property Name="status" Type="nvarchar" MaxLength="50" />
           <Property Name="employee" Type="nvarchar" MaxLength="50" />
+          <Property Name="partners" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
@@ -54,6 +57,13 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Function Name="PROC_SEARCH_DOISOAT_BY_PARAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_partner" Type="varchar" Mode="In" />
+          <Parameter Name="v_status" Type="varchar" Mode="In" />
+          <Parameter Name="v_code" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
+          <Parameter Name="v_toDateDS" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="EntityDBQuocThinhModelStoreContainer">
           <EntitySet Name="DoiSoatVanChuyen" EntityType="Self.DoiSoatVanChuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonDaHoanTraThucTe" EntityType="Self.DonDaHoanTraThucTe" Schema="dbo" store:Type="Tables" />
@@ -69,6 +79,13 @@
           <EntitySet Name="sysdiagrams" EntityType="EntityDBQuocThinhModel.sysdiagram" />
           <EntitySet Name="DoiSoatVanChuyens" EntityType="EntityDBQuocThinhModel.DoiSoatVanChuyen" />
           <EntitySet Name="DonDis" EntityType="EntityDBQuocThinhModel.DonDi" />
+          <FunctionImport Name="PROC_SEARCH_DOISOAT_BY_PARAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DOISOAT_BY_PARAM_Result)">
+            <Parameter Name="v_partner" Mode="In" Type="String" />
+            <Parameter Name="v_status" Mode="In" Type="String" />
+            <Parameter Name="v_code" Mode="In" Type="String" />
+            <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="DonDaHoanTraThucTe">
           <Key>
@@ -79,6 +96,7 @@
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="org_delivery" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="cross_check_date" Type="DateTime" Precision="0" />
+          <Property Name="partners" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="sysdiagram">
           <Key>
@@ -103,6 +121,7 @@
           <Property Name="amount" Type="Decimal" Precision="18" Scale="0" />
           <Property Name="created_date" Type="DateTime" Precision="3" />
           <Property Name="code_shop" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="partners" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="DonDi">
           <Key>
@@ -118,7 +137,23 @@
           <Property Name="out_date" Type="DateTime" Precision="0" />
           <Property Name="status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="employee" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="partners" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
+        <ComplexType Name="PROC_SEARCH_DOISOAT_BY_PARAM_Result">
+          <Property Type="String" Name="Mã_đơn_hàng" Nullable="false" MaxLength="100" />
+          <Property Type="Decimal" Name="Số_tiền" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Tiền_thu_hộ" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="Số_tiền_chênh_lêch" Nullable="true" Precision="19" Scale="0" />
+          <Property Type="Decimal" Name="Phí_hoàn_trả" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Mã_sub_đơn_hoàn_thực_tế" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Tên_khách_hàng" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Trạng_thái_đơn_hàng" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Trạng_thái_hoàn_trả" Nullable="false" MaxLength="25" />
+          <Property Type="String" Name="Trạng_thái_đối_soát" Nullable="false" MaxLength="33" />
+          <Property Type="String" Name="Ngày_đối_soát" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Đối_tác" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mô_tả" Nullable="true" MaxLength="2000" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -128,6 +163,7 @@
           <EntitySetMapping Name="DonDaHoanTraThucTes">
             <EntityTypeMapping TypeName="EntityDBQuocThinhModel.DonDaHoanTraThucTe">
               <MappingFragment StoreEntitySet="DonDaHoanTraThucTe">
+                <ScalarProperty Name="partners" ColumnName="partners" />
                 <ScalarProperty Name="cross_check_date" ColumnName="cross_check_date" />
                 <ScalarProperty Name="org_delivery" ColumnName="org_delivery" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
@@ -150,6 +186,7 @@
           <EntitySetMapping Name="DoiSoatVanChuyens">
             <EntityTypeMapping TypeName="EntityDBQuocThinhModel.DoiSoatVanChuyen">
               <MappingFragment StoreEntitySet="DoiSoatVanChuyen">
+                <ScalarProperty Name="partners" ColumnName="partners" />
                 <ScalarProperty Name="code_shop" ColumnName="code_shop" />
                 <ScalarProperty Name="created_date" ColumnName="created_date" />
                 <ScalarProperty Name="amount" ColumnName="amount" />
@@ -165,6 +202,7 @@
           <EntitySetMapping Name="DonDis">
             <EntityTypeMapping TypeName="EntityDBQuocThinhModel.DonDi">
               <MappingFragment StoreEntitySet="DonDi">
+                <ScalarProperty Name="partners" ColumnName="partners" />
                 <ScalarProperty Name="employee" ColumnName="employee" />
                 <ScalarProperty Name="status" ColumnName="status" />
                 <ScalarProperty Name="out_date" ColumnName="out_date" />
@@ -178,6 +216,25 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_DOISOAT_BY_PARAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_DOISOAT_BY_PARAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_DOISOAT_BY_PARAM_Result">
+                <ScalarProperty Name="Mã_đơn_hàng" ColumnName="Mã đơn hàng" />
+                <ScalarProperty Name="Số_tiền" ColumnName="Số tiền" />
+                <ScalarProperty Name="Tiền_thu_hộ" ColumnName="Tiền thu hộ" />
+                <ScalarProperty Name="Số_tiền_chênh_lêch" ColumnName="Số tiền chênh lêch" />
+                <ScalarProperty Name="Phí_hoàn_trả" ColumnName="Phí hoàn trả" />
+                <ScalarProperty Name="Mã_sub_đơn_hoàn_thực_tế" ColumnName="Mã sub đơn hoàn thực tế" />
+                <ScalarProperty Name="Tên_khách_hàng" ColumnName="Tên khách hàng" />
+                <ScalarProperty Name="Trạng_thái_đơn_hàng" ColumnName="Trạng thái đơn hàng" />
+                <ScalarProperty Name="Trạng_thái_hoàn_trả" ColumnName="Trạng thái hoàn trả" />
+                <ScalarProperty Name="Trạng_thái_đối_soát" ColumnName="Trạng thái đối soát" />
+                <ScalarProperty Name="Ngày_đối_soát" ColumnName="Ngày đối soát" />
+                <ScalarProperty Name="Đối_tác" ColumnName="Đối tác" />
+                <ScalarProperty Name="Mô_tả" ColumnName="Mô tả" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

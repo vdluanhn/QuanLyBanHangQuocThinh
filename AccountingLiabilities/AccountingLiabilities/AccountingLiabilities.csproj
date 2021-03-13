@@ -109,6 +109,9 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="PROC_SEARCH_DOISOAT_BY_PARAM_Result.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="sysdiagram.cs">
@@ -117,6 +120,7 @@
     <Compile Include="Utilities\DBSQLServerUtils.cs" />
     <Compile Include="Utilities\DBUtils.cs" />
     <Compile Include="Utilities\ExportToExcel.cs" />
+    <Compile Include="Utilities\Utils.cs" />
     <EmbeddedResource Include="FrmCheckDon.resx">
       <DependentUpon>FrmCheckDon.cs</DependentUpon>
     </EmbeddedResource>

@@ -4,8 +4,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Data.Linq.SqlClient;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Security;
 using System.Text;
 using System.Windows.Forms;
 
@@ -21,9 +24,9 @@ namespace AccountingLiabilities
 
         private void btnSearch_Click(object sender, EventArgs e)
         {
+            lbKQTK.Text = "Đang tìm kiếm....";
             try
             {
-                lbKQTK.Text = "";
                 var item = cbCheckCondition.Text;
                 Console.WriteLine(item);
                 var startDate = datePickStart.Value.AddDays(-1);
@@ -31,98 +34,19 @@ namespace AccountingLiabilities
                 //var obj = DBHelper.SelectDonDiHoanThanh();
                 using (var db = new DBQuocThinhEntities())
                 {
-                    //from c in table0
-                    //join o in table1 on c.sno equals o.sno into ps
-                    //from o in ps.DefaultIfEmpty()
-                    //select new { c.name, o.number }
-                    var datas = from d in db.DonDis
-
-                                join dsvc in db.DoiSoatVanChuyens on d.code equals dsvc.code into ljoin
-                                from dsvc in ljoin.DefaultIfEmpty()
-
-                                join dht in db.DonDaHoanTraThucTes on d.code.Substring(d.code.Length-9) equals dht.sub_code into ljoin1
-                                from dht in ljoin1.DefaultIfEmpty()
-
-                                orderby d.id descending
-                                select new
-                                {
-                                    d.code,
-                                    d.amount,
-                                    d.cust_name,
-                                    d.cust_address,
-                                    d.cust_mobile,
-                                    d.description,
-                                    d.out_date,
-                                    status_name = dsvc.code == null ? "Mã đơn hàng của ĐVVC không tồn tại" :
-                                                (dsvc.code != null && dsvc.collection_amount > 0 && dsvc.refund_fee == 0) ? "Đơn hoàn thành" :
-                                                (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount > 0) ? "Đơn hoàn trả và có phí thu hộ" :
-                                                (dsvc.code != null && dsvc.refund_fee > 0 && dsvc.collection_amount <= 0) ? "Đơn hoàn trả và không có phí thu hộ" :
-                                                (dsvc.code != null && dht.sub_code != null && dsvc.refund_fee > 0) ? "Đã hoàn thực tế" :
-                                                "Chưa xác định"
-                                                ,
-                                    tien_thu_ho = dsvc.collection_amount,
-                                    ngay_nhap_soi_soat = dsvc.created_date,
-                                    ngay_doi_soat = dsvc.finish_date,
-                                    thanh_toan_du = (dsvc.code != null && dsvc.collection_amount > 0 && d.amount == dsvc.collection_amount) ? "Thanh toán đủ" : "Lệch tiền (tiền đơn hàng - tiền thu hộ): " + (d.amount - dsvc.collection_amount) + " ",
-                                    phi_hoan_tra = dsvc.refund_fee,
-                                    thanhtien = dsvc.amount, don_hoan_thuc_te=dht.sub_code!=null?"Đã hoàn thực tế":"Chưa hoàn thực tế"
-                                };
-                    datas = datas.Where(x => x.ngay_doi_soat > startDate && x.ngay_doi_soat < endDate);
-                    var maDonHang = txtMaDonHang.Text.Trim();
-                    if (maDonHang != null && maDonHang != "")
-                    {
-                        datas = datas.Where(x => x.code == maDonHang);
-                    }
-
-                    switch (item)
-                    {
-                        case "Đơn đã hoàn thành":
-                            var data = datas.Where(x => x.status_name == "Đơn hoàn thành");
-                            dataGridView1.DataSource = data.ToList();
-                            break;
-                        case "Đơn hoàn trên danh sách ĐVVC gửi":
-                            var data1 = datas.Where(x => x.status_name == "Đơn hoàn trả");
-                            dataGridView1.DataSource = data1.ToList();
-
-                            break;
-                        case "Đã hoàn thực tế":
-                            var data2 = datas.Where(x => x.don_hoan_thuc_te == "Đã hoàn thực tế");
-                            dataGridView1.DataSource = data2.ToList();
-
-                            break;
-                        case "Chưa hoàn thực tế":
-                            var data21 = datas.Where(x => x.don_hoan_thuc_te == "Chưa hoàn thực tế");
-                            dataGridView1.DataSource = data21.ToList();
-
-                            break;
-                        case "Mã đơn hàng của ĐVVC không tồn tại":
-                            var data3 = datas.Where(x => x.status_name == "Mã đơn hàng của ĐVVC không tồn tại");
-                            dataGridView1.DataSource = data3.ToList();
-                            break;
-                        case "Đơn hoàn trả và có phí thu hộ":
-                            var data5 = datas.Where(x => x.status_name == "Đơn hoàn trả và có phí thu hộ");
-                            dataGridView1.DataSource = data5.ToList();
-                            break;
-                        case "Đơn hoàn trả và không có phí thu hộ":
-                            var data4 = datas.Where(x => x.status_name == "Đơn hoàn trả và không có phí thu hộ");
-                            dataGridView1.DataSource = data4.ToList();
-
-                            break;
-                        case "Tất cả":
+                    var datas = db.PROC_SEARCH_DOISOAT_BY_PARAM(cbbPartner.Text, Utils.getCodeByStatusName(cbCheckCondition.Text.Trim()),txtMaDonHang.Text.Trim(),startDate, endDate);
+                    
                             dataGridView1.DataSource = datas.ToList();
-
-                            break;
-                        default:
-                            dataGridView1.DataSource = datas.ToList();
-
-                            break;
-                    }
+                    Utils.themSTT(dataGridView1);
                     lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
                 }
             }
             catch (Exception ex)
             {
                     System.Windows.Forms.MessageBox.Show("Dốt, lỗi rồi: " + ex.ToString());
+            }
+            finally
+            {
             }
             
 
@@ -136,15 +60,133 @@ namespace AccountingLiabilities
 
         private void btnExport_Click(object sender, EventArgs e)
         {
-            ExportToExcel excel = new ExportToExcel();
-            // Lấy về nguồn dữ liệu cần Export là 1 DataTable
-            // DataTable này mỗi bạn lấy mỗi khác. 
-            // Ở đây tôi dùng BindingSouce có tên bs nên tôi ép kiểu như sau:
-            // Bạn nào gán trực tiếp vào DataGridView thì ép kiểu DataSource của
-            // DataGridView nhé 
-            //excel.Export(dt, "Danh sach", "DANH SÁCH CÁC ĐƠN VỊ");
+            lbKQTK.Text = "Đang xử lý xuất file excel kết quả tìm kiếm "+ dataGridView1.Rows.Count + " đơn hàng....";
+            ExportarDataGridViewExcel(dataGridView1);
+        }
+        private void ExportarDataGridViewExcel(DataGridView grd)
+        {
+            try
+            {
+                SaveFileDialog fichero = new SaveFileDialog();
+                fichero.Filter = "Excel Workbook|*.xlsx|Excel Workbook 97-2003|*.xls";
+                string fileName = "export_doisoat_" + DateTime.Now.ToString("yyyyMMdd-HHmm") + ".xls";
+                fichero.FileName = fileName;
+                if (fichero.ShowDialog() == DialogResult.OK)
+                {
+                    Microsoft.Office.Interop.Excel.Application aplicacion;
+                    Microsoft.Office.Interop.Excel.Workbook libros_trabajo;
+                    Microsoft.Office.Interop.Excel.Worksheet hoja_trabajo;
+                    aplicacion = new Microsoft.Office.Interop.Excel.Application();
+                    libros_trabajo = aplicacion.Workbooks.Add();
+                    hoja_trabajo =
+                        (Microsoft.Office.Interop.Excel.Worksheet)libros_trabajo.Worksheets.get_Item(1);
+
+                    // changing the name of active sheet
+                    hoja_trabajo.Name = "Exported from App";
+                    // storing header part in Excel
+                    for (int i = 1; i < grd.Columns.Count + 1; i++)
+                    {
+                        hoja_trabajo.Cells[1, i] = grd.Columns[i - 1].HeaderText;
+                    }
+
+                    //Recorremos el DataGridView rellenando la hoja de trabajo
+                    for (int i = 1; i < grd.Rows.Count + 1; i++)
+                    {
+                        for (int j = 0; j < grd.Columns.Count; j++)
+                        {
+                            hoja_trabajo.Cells[i + 1, j + 1] = grd.Rows[i - 1].Cells[j].Value == null ? "" : grd.Rows[i - 1].Cells[j].Value.ToString();
+                        }
+                    }
+                    libros_trabajo.SaveAs(fichero.FileName,
+                        Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal); 
+                    libros_trabajo.Close(true);
+                    aplicacion.Quit();
+                    lbKQTK.Text = "- Xuất file chứa " + dataGridView1.Rows.Count + " (đơn hàng) thành công! Kiểm tra file tại: "+ Path.GetFullPath(fichero.FileName)+"- Do you want to open the file now?";
+                    if (MessageBox.Show(lbKQTK.Text, "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes) {
+                        string fileExcel;
+                        fileExcel = Path.GetFullPath(fichero.FileName);
+                        Microsoft.Office.Interop.Excel.Application xlapp;
+                        Microsoft.Office.Interop.Excel.Workbook xlworkbook;
+                        xlapp = new Microsoft.Office.Interop.Excel.Application();
+
+                        xlworkbook = xlapp.Workbooks.Open(fileExcel, 0, false, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+
+                        xlapp.Visible = true;
+                    }
+                }
+            }
+            catch (Exception exx)
+            {
+                MessageBox.Show("Xuất file lỗi, Chi tiết: " + exx.ToString());
+            }
+            
         }
 
+        private void exportToExcel_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Microsoft.Office.Interop.Excel._Application app = new Microsoft.Office.Interop.Excel.Application();
+                Microsoft.Office.Interop.Excel._Workbook workbook = app.Workbooks.Add(Type.Missing);
+                Microsoft.Office.Interop.Excel._Worksheet worksheet = null;
+                app.Visible = true;
+                worksheet = workbook.Sheets["Sheet1"];
+                worksheet = workbook.ActiveSheet;
+                worksheet.Name = "Records";
+
+                try
+                {
+                    for (int i = 0; i < dataGridView1.Columns.Count; i++)
+                    {
+                        worksheet.Cells[1, i + 1] = dataGridView1.Columns[i].HeaderText;
+                    }
+                    for (int i = 0; i < dataGridView1.Rows.Count; i++)
+                    {
+                        for (int j = 0; j < dataGridView1.Columns.Count; j++)
+                        {
+                            if (dataGridView1.Rows[i].Cells[j].Value != null)
+                            {
+                                worksheet.Cells[i + 2, j + 1] = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                            }
+                            else
+                            {
+                                worksheet.Cells[i + 2, j + 1] = "";
+                            }
+                        }
+                    }
+
+                    //Getting the location and file name of the excel to save from user. 
+                    SaveFileDialog saveDialog = new SaveFileDialog();
+                    saveDialog.Filter = "Excel files (*.xlsx)|*.xlsx|All files (*.*)|*.*";
+                    saveDialog.FilterIndex = 2;
+
+                    if (saveDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        workbook.SaveAs(saveDialog.FileName);
+                        MessageBox.Show("Export Successful", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                catch (System.Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+
+                finally
+                {
+                    app.Quit();
+                    workbook = null;
+                    worksheet = null;
+                }
+            }
+            catch (Exception ex) { MessageBox.Show(ex.Message.ToString()); }
+        }
+        private void copyAlltoClipboard()
+        {
+            dataGridView1.SelectAll();
+            DataObject dataObj = dataGridView1.GetClipboardContent();
+            if (dataObj != null)
+                Clipboard.SetDataObject(dataObj);
+        }
         private void label1_Click(object sender, EventArgs e)
         {
 

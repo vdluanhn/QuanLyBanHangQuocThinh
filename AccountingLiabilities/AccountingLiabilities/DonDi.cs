@@ -24,5 +24,6 @@ namespace AccountingLiabilities
         public Nullable<System.DateTime> out_date { get; set; }
         public string status { get; set; }
         public string employee { get; set; }
+        public string partners { get; set; }
     }
 }

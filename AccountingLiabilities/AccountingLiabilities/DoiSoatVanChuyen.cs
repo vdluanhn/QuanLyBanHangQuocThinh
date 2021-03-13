@@ -23,5 +23,6 @@ namespace AccountingLiabilities
         public Nullable<decimal> amount { get; set; }
         public Nullable<System.DateTime> created_date { get; set; }
         public string code_shop { get; set; }
+        public string partners { get; set; }
     }
 }

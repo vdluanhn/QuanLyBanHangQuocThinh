@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.btnChoose = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
@@ -40,15 +41,16 @@
             this.label2 = new System.Windows.Forms.Label();
             this.btnDonHOanThucTe = new System.Windows.Forms.Button();
             this.lbTenFile = new System.Windows.Forms.Label();
-            this.txtDoiTac = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
+            this.cbbPartner = new System.Windows.Forms.ComboBox();
+            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // btnChoose
             // 
             this.btnChoose.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnChoose.Location = new System.Drawing.Point(27, 20);
+            this.btnChoose.Location = new System.Drawing.Point(26, 16);
             this.btnChoose.Name = "btnChoose";
             this.btnChoose.Size = new System.Drawing.Size(75, 23);
             this.btnChoose.TabIndex = 0;
@@ -64,7 +66,7 @@
             // 
             this.cbSheet.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.cbSheet.FormattingEnabled = true;
-            this.cbSheet.Location = new System.Drawing.Point(111, 54);
+            this.cbSheet.Location = new System.Drawing.Point(110, 50);
             this.cbSheet.Name = "cbSheet";
             this.cbSheet.Size = new System.Drawing.Size(256, 21);
             this.cbSheet.TabIndex = 1;
@@ -75,7 +77,19 @@
             this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.dataGridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
+            this.dataGridView1.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.STT});
             this.dataGridView1.Location = new System.Drawing.Point(24, 81);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.Size = new System.Drawing.Size(764, 332);
@@ -85,7 +99,7 @@
             // 
             this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(24, 57);
+            this.label1.Location = new System.Drawing.Point(23, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(61, 13);
             this.label1.TabIndex = 3;
@@ -115,9 +129,10 @@
             // 
             // dtPickerDS
             // 
+            this.dtPickerDS.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.dtPickerDS.CustomFormat = "dd/MM/yyyy";
             this.dtPickerDS.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtPickerDS.Location = new System.Drawing.Point(525, 28);
+            this.dtPickerDS.Location = new System.Drawing.Point(524, 17);
             this.dtPickerDS.Name = "dtPickerDS";
             this.dtPickerDS.Size = new System.Drawing.Size(254, 20);
             this.dtPickerDS.TabIndex = 4;
@@ -126,7 +141,7 @@
             // 
             this.label2.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(420, 25);
+            this.label2.Location = new System.Drawing.Point(419, 21);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(99, 13);
             this.label2.TabIndex = 3;
@@ -148,36 +163,49 @@
             this.lbTenFile.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.lbTenFile.AutoSize = true;
             this.lbTenFile.ForeColor = System.Drawing.Color.DarkMagenta;
-            this.lbTenFile.Location = new System.Drawing.Point(108, 24);
+            this.lbTenFile.Location = new System.Drawing.Point(107, 21);
             this.lbTenFile.Name = "lbTenFile";
             this.lbTenFile.Size = new System.Drawing.Size(42, 13);
             this.lbTenFile.TabIndex = 3;
             this.lbTenFile.Text = "Ten file";
             // 
-            // txtDoiTac
-            // 
-            this.txtDoiTac.Location = new System.Drawing.Point(525, 54);
-            this.txtDoiTac.Name = "txtDoiTac";
-            this.txtDoiTac.Size = new System.Drawing.Size(254, 20);
-            this.txtDoiTac.TabIndex = 5;
-            this.txtDoiTac.Text = "GHTK";
-            // 
             // label3
             // 
             this.label3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(416, 57);
+            this.label3.Location = new System.Drawing.Point(415, 53);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(103, 13);
             this.label3.TabIndex = 3;
             this.label3.Text = "Tên đối tác đối soát";
+            // 
+            // cbbPartner
+            // 
+            this.cbbPartner.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cbbPartner.FormattingEnabled = true;
+            this.cbbPartner.Items.AddRange(new object[] {
+            "GHTK",
+            "Thailan"});
+            this.cbbPartner.Location = new System.Drawing.Point(524, 50);
+            this.cbbPartner.Name = "cbbPartner";
+            this.cbbPartner.Size = new System.Drawing.Size(254, 21);
+            this.cbbPartner.TabIndex = 6;
+            this.cbbPartner.Text = "GHTK";
+            // 
+            // STT
+            // 
+            this.STT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.STT.HeaderText = "STT";
+            this.STT.Name = "STT";
+            this.STT.ReadOnly = true;
+            this.STT.Width = 70;
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.txtDoiTac);
+            this.Controls.Add(this.cbbPartner);
             this.Controls.Add(this.dtPickerDS);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
@@ -191,7 +219,8 @@
             this.Controls.Add(this.btnChoose);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
-            this.Text = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Nhập thông tin đối soát";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -211,8 +240,9 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnDonHOanThucTe;
         private System.Windows.Forms.Label lbTenFile;
-        private System.Windows.Forms.TextBox txtDoiTac;
         private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.ComboBox cbbPartner;
+        private System.Windows.Forms.DataGridViewTextBoxColumn STT;
     }
 }
 

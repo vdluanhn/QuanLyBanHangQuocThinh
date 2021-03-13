@@ -19,5 +19,6 @@ namespace AccountingLiabilities
         public Nullable<System.DateTime> created_date { get; set; }
         public string org_delivery { get; set; }
         public Nullable<System.DateTime> cross_check_date { get; set; }
+        public string partners { get; set; }
     }
 }
