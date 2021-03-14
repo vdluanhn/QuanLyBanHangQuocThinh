@@ -22,6 +22,7 @@ namespace AccountingLiabilities
 
         private void btnChoose_Click(object sender, EventArgs e)
         {
+            lbTenFile.Text = "Đang đọc dữ liệu file....";
             try
             {
                 using (OpenFileDialog ofd = new OpenFileDialog() { Filter = "Excel Workbook|*.xlsx|Excel Workbook 97-2003|*.xls", ValidateNames = true })
@@ -74,8 +75,10 @@ namespace AccountingLiabilities
         }
         private void cbSheet_SelectedIndexChanged(object sender, EventArgs e)
         {
+            lbKQ.Text = "Đang đọc dữ liệu của sheet " + cbSheet.Text+" ...";
             dataGridView1.DataSource = ds.Tables[cbSheet.SelectedIndex];
             Utils.themSTT(dataGridView1);
+            lbKQ.Text = "Sheet " + cbSheet.Text + " có " + dataGridView1.Rows.Count + " bản ghi!";
         }
 
         private void btnImportDonDi_Click(object sender, EventArgs e)
@@ -123,7 +126,7 @@ namespace AccountingLiabilities
             }
             
         }
-
+        int n1 = 0;
         private void btnImportDS_Click(object sender, EventArgs e)
         {
             try
@@ -133,15 +136,20 @@ namespace AccountingLiabilities
                 List<DoiSoatVanChuyen> lstData = new List<DoiSoatVanChuyen>();
                 foreach (DataGridViewRow row in dataGridView1.Rows)
                 {
+                    n1++;
+                    if (n1==639)
+                    {
+                        Console.WriteLine("gia tri: "+row.Cells["Tiền COD"].Value);
+                    }
                     var item = new DoiSoatVanChuyen();
                     if (dataGridView1.Columns.Contains("Mã đơn hàng") == true)
                         item.code = row.Cells["Mã đơn hàng"].Value == null ? "" : row.Cells["Mã đơn hàng"].Value.ToString().Trim();
                     else if (dataGridView1.Columns.Contains("Tracking number") == true)
                         item.code = row.Cells["Tracking number"].Value == null ? "" : row.Cells["Tracking number"].Value.ToString().Trim();
                     if (dataGridView1.Columns.Contains("Tiền thu hộ") == true)
-                        item.collection_amount = Convert.ToInt32((row.Cells["Tiền thu hộ"].Value==""|| row.Cells["Tiền thu hộ"].Value==null)?"0": row.Cells["Tiền thu hộ"].Value);
+                        item.collection_amount = (row.Cells["Tiền thu hộ"].Value == null || row.Cells["Tiền thu hộ"].Value=="")?0 : Convert.ToInt32(row.Cells["Tiền thu hộ"].Value);
                     else if (dataGridView1.Columns.Contains("Tiền COD") == true)
-                        item.collection_amount = Convert.ToInt32((row.Cells["Tiền COD"].Value == "" || row.Cells["Tiền COD"].Value == null) ? "0" : row.Cells["Tiền COD"].Value);
+                        item.collection_amount = (row.Cells["Tiền COD"].Value == null || row.Cells["Tiền COD"].Value == "") ? 0 : Convert.ToInt32(row.Cells["Tiền COD"].Value);
                     if (dataGridView1.Columns.Contains("Phí giao hàng") == true)
                         item.delivery_fee = Convert.ToInt32(row.Cells["Phí giao hàng"].Value);
                     if (dataGridView1.Columns.Contains("Phí chuyển hoàn") == true)
@@ -163,7 +171,7 @@ namespace AccountingLiabilities
             }
             catch (Exception exx)
             {
-                MessageBox.Show("Dữ liệu đầu vào bị sai gì đó rồi vợ, kiểm tra và thử lại nhé. \nChi tiết: " + exx.ToString());
+                MessageBox.Show("Loi dong "+n1+" -Dữ liệu đầu vào bị sai gì đó rồi vợ, kiểm tra và thử lại nhé. \nChi tiết: " + exx.ToString());
             }
         }
 
@@ -178,6 +186,7 @@ namespace AccountingLiabilities
                     var item = new DonDaHoanTraThucTe();
                     item.sub_code = row.Cells["Mã đơn hàng"].Value == null ? "" : row.Cells["Mã đơn hàng"].Value.ToString().Trim();
                     item.org_delivery = cbbPartner.Text.Trim();
+                    item.partners = cbbPartner.Text.Trim();
                     item.cross_check_date = dtPickerDS.Value;
                     item.created_date = DateTime.Now;
                     lstData.Add(item);

@@ -34,6 +34,7 @@
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.cbSheet = new System.Windows.Forms.ComboBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label1 = new System.Windows.Forms.Label();
             this.btnImportDonDi = new System.Windows.Forms.Button();
             this.btnImportDS = new System.Windows.Forms.Button();
@@ -43,7 +44,7 @@
             this.lbTenFile = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.cbbPartner = new System.Windows.Forms.ComboBox();
-            this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lbKQ = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -90,10 +91,18 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.STT});
-            this.dataGridView1.Location = new System.Drawing.Point(24, 81);
+            this.dataGridView1.Location = new System.Drawing.Point(24, 98);
             this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(764, 332);
+            this.dataGridView1.Size = new System.Drawing.Size(764, 315);
             this.dataGridView1.TabIndex = 2;
+            // 
+            // STT
+            // 
+            this.STT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.STT.HeaderText = "STT";
+            this.STT.Name = "STT";
+            this.STT.ReadOnly = true;
+            this.STT.Width = 70;
             // 
             // label1
             // 
@@ -192,19 +201,23 @@
             this.cbbPartner.TabIndex = 6;
             this.cbbPartner.Text = "GHTK";
             // 
-            // STT
+            // lbKQ
             // 
-            this.STT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this.STT.HeaderText = "STT";
-            this.STT.Name = "STT";
-            this.STT.ReadOnly = true;
-            this.STT.Width = 70;
+            this.lbKQ.AutoSize = true;
+            this.lbKQ.BackColor = System.Drawing.Color.Transparent;
+            this.lbKQ.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+            this.lbKQ.Location = new System.Drawing.Point(23, 82);
+            this.lbKQ.Name = "lbKQ";
+            this.lbKQ.Size = new System.Drawing.Size(35, 13);
+            this.lbKQ.TabIndex = 7;
+            this.lbKQ.Text = "label4";
             // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.lbKQ);
             this.Controls.Add(this.cbbPartner);
             this.Controls.Add(this.dtPickerDS);
             this.Controls.Add(this.label3);
@@ -243,6 +256,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.ComboBox cbbPartner;
         private System.Windows.Forms.DataGridViewTextBoxColumn STT;
+        private System.Windows.Forms.Label lbKQ;
     }
 }
 

@@ -38,7 +38,7 @@ namespace AccountingLiabilities
                     
                             dataGridView1.DataSource = datas.ToList();
                     Utils.themSTT(dataGridView1);
-                    lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
+                     lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
                 }
             }
             catch (Exception ex)
@@ -190,6 +190,12 @@ namespace AccountingLiabilities
         private void label1_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnQLDanhMuc_Click(object sender, EventArgs e)
+        {
+            FrmDanhMucDon frm = new FrmDanhMucDon();
+            frm.Show();
         }
     }
 }

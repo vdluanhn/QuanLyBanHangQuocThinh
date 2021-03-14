@@ -64,6 +64,24 @@
           <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
           <Parameter Name="v_toDateDS" Type="date" Mode="In" />
         </Function>
+        <Function Name="PROC_SEARCH_DONDI_BY_PARAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_partner" Type="varchar" Mode="In" />
+          <Parameter Name="v_code" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
+          <Parameter Name="v_toDateDS" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_DONDOISOAT_BY_PARAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_partner" Type="varchar" Mode="In" />
+          <Parameter Name="v_code" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
+          <Parameter Name="v_toDateDS" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_DONHOANTHUC_BY_PARAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_partner" Type="varchar" Mode="In" />
+          <Parameter Name="v_code" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
+          <Parameter Name="v_toDateDS" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="EntityDBQuocThinhModelStoreContainer">
           <EntitySet Name="DoiSoatVanChuyen" EntityType="Self.DoiSoatVanChuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonDaHoanTraThucTe" EntityType="Self.DonDaHoanTraThucTe" Schema="dbo" store:Type="Tables" />
@@ -82,6 +100,24 @@
           <FunctionImport Name="PROC_SEARCH_DOISOAT_BY_PARAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DOISOAT_BY_PARAM_Result)">
             <Parameter Name="v_partner" Mode="In" Type="String" />
             <Parameter Name="v_status" Mode="In" Type="String" />
+            <Parameter Name="v_code" Mode="In" Type="String" />
+            <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_DONDI_BY_PARAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DONDI_BY_PARAM_Result)">
+            <Parameter Name="v_partner" Mode="In" Type="String" />
+            <Parameter Name="v_code" Mode="In" Type="String" />
+            <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_DONDOISOAT_BY_PARAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DONDOISOAT_BY_PARAM_Result)">
+            <Parameter Name="v_partner" Mode="In" Type="String" />
+            <Parameter Name="v_code" Mode="In" Type="String" />
+            <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_DONHOANTHUC_BY_PARAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result)">
+            <Parameter Name="v_partner" Mode="In" Type="String" />
             <Parameter Name="v_code" Mode="In" Type="String" />
             <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
             <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
@@ -153,6 +189,38 @@
           <Property Type="String" Name="Ngày_đối_soát" Nullable="true" MaxLength="4000" />
           <Property Type="String" Name="Đối_tác" Nullable="true" MaxLength="50" />
           <Property Type="String" Name="Mô_tả" Nullable="true" MaxLength="2000" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_DONDI_BY_PARAM_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="Mã_đơn_hàng" Nullable="true" MaxLength="100" />
+          <Property Type="Decimal" Name="Số_tiền" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="String" Name="Tên_khách_hàng" Nullable="true" MaxLength="150" />
+          <Property Type="String" Name="Địa_chỉ" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="Số_điện_thoại" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Ngày_xuất_đơn" Nullable="true" MaxLength="4000" />
+          <Property Type="String" Name="Trạng_thái_đơn_hàng" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="Đối_tác" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="Mô_tả" Nullable="true" MaxLength="2000" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_DONDOISOAT_BY_PARAM_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="code" Nullable="false" MaxLength="100" />
+          <Property Type="DateTime" Name="finish_date" Nullable="true" Precision="23" />
+          <Property Type="Decimal" Name="collection_amount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="refund_fee" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="delivery_fee" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="amount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="code_shop" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="partners" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="sub_code" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="org_delivery" Nullable="true" MaxLength="50" />
+          <Property Type="DateTime" Name="cross_check_date" Nullable="true" />
+          <Property Type="String" Name="partners" Nullable="true" MaxLength="50" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -232,6 +300,50 @@
                 <ScalarProperty Name="Ngày_đối_soát" ColumnName="Ngày đối soát" />
                 <ScalarProperty Name="Đối_tác" ColumnName="Đối tác" />
                 <ScalarProperty Name="Mô_tả" ColumnName="Mô tả" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_DONDI_BY_PARAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_DONDI_BY_PARAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_DONDI_BY_PARAM_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="Mã_đơn_hàng" ColumnName="Mã đơn hàng" />
+                <ScalarProperty Name="Số_tiền" ColumnName="Số tiền" />
+                <ScalarProperty Name="Tên_khách_hàng" ColumnName="Tên khách hàng" />
+                <ScalarProperty Name="Địa_chỉ" ColumnName="Địa chỉ" />
+                <ScalarProperty Name="Số_điện_thoại" ColumnName="Số điện thoại" />
+                <ScalarProperty Name="Ngày_xuất_đơn" ColumnName="Ngày xuất đơn" />
+                <ScalarProperty Name="Trạng_thái_đơn_hàng" ColumnName="Trạng thái đơn hàng" />
+                <ScalarProperty Name="Đối_tác" ColumnName="Đối tác" />
+                <ScalarProperty Name="Mô_tả" ColumnName="Mô tả" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_DONDOISOAT_BY_PARAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_DONDOISOAT_BY_PARAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_DONDOISOAT_BY_PARAM_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="finish_date" ColumnName="finish_date" />
+                <ScalarProperty Name="collection_amount" ColumnName="collection_amount" />
+                <ScalarProperty Name="refund_fee" ColumnName="refund_fee" />
+                <ScalarProperty Name="delivery_fee" ColumnName="delivery_fee" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="code_shop" ColumnName="code_shop" />
+                <ScalarProperty Name="partners" ColumnName="partners" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_DONHOANTHUC_BY_PARAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_DONHOANTHUC_BY_PARAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="sub_code" ColumnName="sub_code" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="org_delivery" ColumnName="org_delivery" />
+                <ScalarProperty Name="cross_check_date" ColumnName="cross_check_date" />
+                <ScalarProperty Name="partners" ColumnName="partners" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

@@ -103,6 +103,12 @@
     <Compile Include="FrmCheckDon.Designer.cs">
       <DependentUpon>FrmCheckDon.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmDanhMucDon.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmDanhMucDon.Designer.cs">
+      <DependentUpon>FrmDanhMucDon.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,15 @@
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="PROC_SEARCH_DOISOAT_BY_PARAM_Result.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_SEARCH_DONDI_BY_PARAM_Result.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_SEARCH_DONDOISOAT_BY_PARAM_Result.cs">
+      <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result.cs">
       <DependentUpon>DBQuocThinhModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
@@ -123,6 +138,9 @@
     <Compile Include="Utilities\Utils.cs" />
     <EmbeddedResource Include="FrmCheckDon.resx">
       <DependentUpon>FrmCheckDon.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmDanhMucDon.resx">
+      <DependentUpon>FrmDanhMucDon.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>

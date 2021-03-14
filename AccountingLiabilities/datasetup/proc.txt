@@ -1,0 +1,140 @@
+USE [DBQuocThinh]
+GO
+/****** Object:  StoredProcedure [dbo].[PROC_SEARCH_DOISOAT_BY_PARAM]    Script Date: 14-Mar-21 3:10:06 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PROC_SEARCH_DOISOAT_BY_PARAM]
+    @v_partner VARCHAR(50),
+	@v_status varchar(50),
+	@v_code varchar(100),
+	@v_fromDateDS date,
+	@v_toDateDS date
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select trim(dd.code) as N'Mã đơn hàng', dd.amount as N'Số tiền', dsvc.collection_amount as N'Tiền thu hộ', 
+		ISNULL(dd.amount,0)-ISNULL(dsvc.collection_amount,0) as N'Số tiền chênh lêch', dsvc.refund_fee as N'Phí hoàn trả', dht.sub_code as 'Mã sub đơn hoàn thực tế', 
+	dd.cust_name as N'Tên khách hàng', ISNULL(dd.status,N'Đã chuyển cho đối tác') as N'Trạng thái đơn hàng',
+	case when dht.sub_code is null and dsvc.refund_fee is not null and dsvc.refund_fee > 0 then N'Đơn chưa hoàn trả thực tế' when dht.sub_code is null and (dsvc.refund_fee is null or dsvc.refund_fee = 0) then N'Không phải đơn hoàn trả'  else N'Đơn đã hoàn trả thực tế' end as N'Trạng thái hoàn trả',
+	case when dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount > 0 or (dsvc.collection_amount=0 and dd.amount = 0)) then N'Đơn hoàn thành'
+		when dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount <> dd.amount) then N'Đơn đã hoàn thành có lệch tiền'
+		when dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount = dd.amount) then N'Đơn đã hoàn thành không lệch tiền'
+		when dsvc.code is not null and (dsvc.refund_fee > 0) then N'Đơn hoàn trả'
+		when dsvc.code is not null and (dsvc.collection_amount=0 or dsvc.collection_amount is null) and (dsvc.refund_fee > 0) then N'Đơn hoàn trả và không phí thu hộ'
+		when dsvc.code is not null and (dsvc.collection_amount is not null and dsvc.collection_amount > 0) and (dsvc.refund_fee > 0) then N'Đơn hoàn trả và có phí thu hộ'
+		when dd.code is not null and dsvc.code is null and dht.sub_code is null then N'Đơn chưa đối soát'
+		else N'Chưa xác định' end as N'Trạng thái đối soát',
+		FORMAT (dsvc.finish_date, 'dd/MM/yyyy ')  as N'Ngày đối soát',
+		dd.partners as N'Đối tác',
+		dd.description as N'Mô tả'
+	from DonDi dd 
+	
+	left join DoiSoatVanChuyen dsvc ON dd.code=dsvc.code and dd.partners = dsvc.partners
+	left join DonDaHoanTraThucTe dht ON dd.code like CONCAT('%', dht.sub_code)  and dd.partners = dht.partners
+
+	where 1=1 
+		and (dd.partners = @v_partner or @v_partner='TATCA' or @v_partner='Tất cả')
+		and (dsvc.finish_date is null or ( (@v_fromDateDS is null or dsvc.finish_date > @v_fromDateDS) and (@v_toDateDS is null or dsvc.finish_date < @v_toDateDS)))
+		and dd.code like  CONCAT('%', @v_code,'%')
+		and (@v_status='TATCA' or @v_status = 'Tất cả' 
+				OR (@v_status = 'DONDAHOANTHANH' and dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount > 0 or (dsvc.collection_amount=0 and dd.amount = 0))) 
+				OR (@v_status = 'DONDAHOANTHANHCOLECHTIEN' AND dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount <> dd.amount))
+				OR (@v_status = 'DONDAHOANTHANHKHONGLECHTIEN' AND dsvc.code is not null and (dsvc.refund_fee=0 or dsvc.refund_fee is null) and (dsvc.collection_amount = dd.amount))
+				OR (@v_status = 'DONHOANTRA' AND dsvc.code is not null and (dsvc.refund_fee > 0))
+				OR (@v_status = 'DONHOANTRAKHONGPHITHUHO' AND dsvc.code is not null and (dsvc.collection_amount=0 or dsvc.collection_amount is null) and (dsvc.refund_fee > 0) )
+				OR (@v_status = 'DONHOANTRACOPHITHUHO' AND  dsvc.code is not null and (dsvc.collection_amount is not null and dsvc.collection_amount > 0) and (dsvc.refund_fee > 0) )
+				OR (@v_status = 'DONCHUAHOANTRATHUCTE' AND  dht.sub_code is null and dsvc.refund_fee is not null and dsvc.refund_fee > 0)
+				OR (@v_status = 'DONDAHOANTRATHUCTE' AND  dht.sub_code is not null)
+				OR (@v_status = 'DONHANGCHUADOISOAT' AND  dht.sub_code is null AND dsvc.code is null and dd.code is not null)
+				)
+
+END
+;
+--exec  PROC_SEARCH_DOISOAT_BY_PARAM 'Tất cả', 'TATCA', '','',''
+
+----------------------------------------------------------------------
+USE [DBQuocThinh]
+GO
+/****** Object:  StoredProcedure [dbo].[PROC_SEARCH_DONDI_BY_PARAM]    Script Date: 14-Mar-21 3:10:27 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PROC_SEARCH_DONDI_BY_PARAM]
+    @v_partner VARCHAR(50),
+	@v_code varchar(100),
+	@v_fromDateDS date,
+	@v_toDateDS date
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select dd.id, trim(dd.code) as N'Mã đơn hàng', dd.amount as N'Số tiền',
+		
+	dd.cust_name as N'Tên khách hàng', dd.cust_address as N'Địa chỉ', dd.cust_mobile as N'Số điện thoại', FORMAT (dd.out_date, 'dd/MM/yyyy ')  as N'Ngày xuất đơn',
+	ISNULL(dd.status,N'Đã chuyển cho đối tác') as N'Trạng thái đơn hàng',
+	
+		dd.partners as N'Đối tác',
+		dd.description as N'Mô tả'
+	from DonDi dd 
+
+	where 1=1 
+		and (dd.partners = @v_partner or @v_partner='TATCA' or @v_partner='Tất cả')
+		and ( dd.out_date is null or ( (@v_fromDateDS is null or dd.out_date > @v_fromDateDS) and (@v_toDateDS is null or dd.out_date < @v_toDateDS)))
+		and dd.code like  CONCAT('%', @v_code,'%')
+
+END
+--exec [PROC_SEARCH_DONDI_BY_PARAM] 'Thailan',null,null,null;
+---------------------------------------------------------------------------
+USE [DBQuocThinh]
+GO
+/****** Object:  StoredProcedure [dbo].[PROC_SEARCH_DONDOISOAT_BY_PARAM]    Script Date: 14-Mar-21 3:10:39 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PROC_SEARCH_DONDOISOAT_BY_PARAM]
+    @v_partner VARCHAR(50),
+	@v_code varchar(100),
+	@v_fromDateDS date,
+	@v_toDateDS date
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select ds.*
+	from DoiSoatVanChuyen ds 
+
+	where 1=1 
+		and (ds.partners = @v_partner or @v_partner='TATCA' or @v_partner='Tất cả')
+		and ( ds.finish_date is null or ( (@v_fromDateDS is null or ds.finish_date > @v_fromDateDS) and (@v_toDateDS is null or ds.finish_date < @v_toDateDS)))
+		and ds.code like  CONCAT('%', @v_code,'%')
+
+END
+--exec [PROC_SEARCH_DONDOISOAT_BY_PARAM] 'Thailan',null,null,null;
+-------------------------------------------------------------------------------
+USE [DBQuocThinh]
+GO
+/****** Object:  StoredProcedure [dbo].[PROC_SEARCH_DONHOANTHUC_BY_PARAM]    Script Date: 14-Mar-21 3:10:54 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[PROC_SEARCH_DONHOANTHUC_BY_PARAM]
+    @v_partner VARCHAR(50),
+	@v_code varchar(100),
+	@v_fromDateDS date,
+	@v_toDateDS date
+AS
+BEGIN
+	SET NOCOUNT ON;
+	select ds.*
+	from DonDaHoanTraThucTe ds 
+
+	where 1=1 
+		and (ds.partners = @v_partner or @v_partner='TATCA' or @v_partner='Tất cả')
+		and ( ds.cross_check_date is null or ( (@v_fromDateDS is null or ds.cross_check_date > @v_fromDateDS) and (@v_toDateDS is null or ds.cross_check_date < @v_toDateDS)))
+		and ds.sub_code like  CONCAT('%', @v_code,'%')
+
+END;
+--exec [PROC_SEARCH_DONHOANTHUC_BY_PARAM] 'Thailan',null,null,null;

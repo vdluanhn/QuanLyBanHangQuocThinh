@@ -43,6 +43,8 @@
             this.btnImportData = new System.Windows.Forms.Button();
             this.btnExport = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.cbbPartner = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
             this.txtMaDonHang = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
@@ -52,8 +54,6 @@
             this.datePickerEnd = new System.Windows.Forms.DateTimePicker();
             this.datePickStart = new System.Windows.Forms.DateTimePicker();
             this.lbKQTK = new System.Windows.Forms.Label();
-            this.cbbPartner = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
             this.STT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mã_đơn_hàng = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Số_tiền = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -68,6 +68,7 @@
             this.Ngày_đối_soát = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Đối_tác = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mô_tả = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.btnQLDanhMuc = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -96,9 +97,9 @@
             // btnSearch
             // 
             this.btnSearch.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnSearch.Location = new System.Drawing.Point(384, 93);
+            this.btnSearch.Location = new System.Drawing.Point(265, 93);
             this.btnSearch.Name = "btnSearch";
-            this.btnSearch.Size = new System.Drawing.Size(75, 23);
+            this.btnSearch.Size = new System.Drawing.Size(115, 23);
             this.btnSearch.TabIndex = 1;
             this.btnSearch.Text = "Tìm kiếm";
             this.btnSearch.UseVisualStyleBackColor = true;
@@ -145,9 +146,9 @@
             // btnImportData
             // 
             this.btnImportData.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnImportData.Location = new System.Drawing.Point(491, 93);
+            this.btnImportData.Location = new System.Drawing.Point(404, 93);
             this.btnImportData.Name = "btnImportData";
-            this.btnImportData.Size = new System.Drawing.Size(75, 23);
+            this.btnImportData.Size = new System.Drawing.Size(115, 23);
             this.btnImportData.TabIndex = 1;
             this.btnImportData.Text = "Nhập dữ liệu";
             this.btnImportData.UseVisualStyleBackColor = true;
@@ -156,9 +157,9 @@
             // btnExport
             // 
             this.btnExport.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.btnExport.Location = new System.Drawing.Point(598, 93);
+            this.btnExport.Location = new System.Drawing.Point(543, 93);
             this.btnExport.Name = "btnExport";
-            this.btnExport.Size = new System.Drawing.Size(75, 23);
+            this.btnExport.Size = new System.Drawing.Size(115, 23);
             this.btnExport.TabIndex = 1;
             this.btnExport.Text = "Export";
             this.btnExport.UseVisualStyleBackColor = true;
@@ -185,6 +186,30 @@
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Tìm kiếm";
+            // 
+            // cbbPartner
+            // 
+            this.cbbPartner.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.cbbPartner.FormattingEnabled = true;
+            this.cbbPartner.Items.AddRange(new object[] {
+            "Tất cả",
+            "GHTK",
+            "Thailan"});
+            this.cbbPartner.Location = new System.Drawing.Point(656, 19);
+            this.cbbPartner.Name = "cbbPartner";
+            this.cbbPartner.Size = new System.Drawing.Size(332, 21);
+            this.cbbPartner.TabIndex = 8;
+            this.cbbPartner.Text = "GHTK";
+            // 
+            // label6
+            // 
+            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(537, 22);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(103, 13);
+            this.label6.TabIndex = 7;
+            this.label6.Text = "Tên đối tác đối soát";
             // 
             // txtMaDonHang
             // 
@@ -280,30 +305,6 @@
             this.lbKQTK.Size = new System.Drawing.Size(0, 13);
             this.lbKQTK.TabIndex = 4;
             // 
-            // cbbPartner
-            // 
-            this.cbbPartner.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.cbbPartner.FormattingEnabled = true;
-            this.cbbPartner.Items.AddRange(new object[] {
-            "Tất cả",
-            "GHTK",
-            "Thailan"});
-            this.cbbPartner.Location = new System.Drawing.Point(656, 19);
-            this.cbbPartner.Name = "cbbPartner";
-            this.cbbPartner.Size = new System.Drawing.Size(332, 21);
-            this.cbbPartner.TabIndex = 8;
-            this.cbbPartner.Text = "GHTK";
-            // 
-            // label6
-            // 
-            this.label6.Anchor = System.Windows.Forms.AnchorStyles.Top;
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(537, 22);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(103, 13);
-            this.label6.TabIndex = 7;
-            this.label6.Text = "Tên đối tác đối soát";
-            // 
             // STT
             // 
             this.STT.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -330,8 +331,7 @@
             // 
             this.Số_tiền.DataPropertyName = "Số_tiền";
             dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle4.Format = "#,#";
-            dataGridViewCellStyle4.NullValue = null;
+            dataGridViewCellStyle4.Format = "N0";
             this.Số_tiền.DefaultCellStyle = dataGridViewCellStyle4;
             this.Số_tiền.FillWeight = 44.53376F;
             this.Số_tiền.HeaderText = "Số tiền";
@@ -342,7 +342,8 @@
             this.Tiền_thu_hộ.DataPropertyName = "Tiền_thu_hộ";
             dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
             dataGridViewCellStyle5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle5.Format = "#,#";
+            dataGridViewCellStyle5.Format = "N0";
+            dataGridViewCellStyle5.NullValue = null;
             this.Tiền_thu_hộ.DefaultCellStyle = dataGridViewCellStyle5;
             this.Tiền_thu_hộ.FillWeight = 44.53376F;
             this.Tiền_thu_hộ.HeaderText = "Tiền thu hộ";
@@ -352,7 +353,8 @@
             // 
             this.Số_tiền_chênh_lêch.DataPropertyName = "Số_tiền_chênh_lêch";
             dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle6.Format = "#,#";
+            dataGridViewCellStyle6.Format = "N0";
+            dataGridViewCellStyle6.NullValue = null;
             this.Số_tiền_chênh_lêch.DefaultCellStyle = dataGridViewCellStyle6;
             this.Số_tiền_chênh_lêch.FillWeight = 44.53376F;
             this.Số_tiền_chênh_lêch.HeaderText = "Số tiền chênh lệch";
@@ -362,7 +364,8 @@
             // 
             this.Phí_hoàn_trả.DataPropertyName = "Phí_hoàn_trả";
             dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle7.Format = "#,#";
+            dataGridViewCellStyle7.Format = "N0";
+            dataGridViewCellStyle7.NullValue = null;
             this.Phí_hoàn_trả.DefaultCellStyle = dataGridViewCellStyle7;
             this.Phí_hoàn_trả.FillWeight = 44.53376F;
             this.Phí_hoàn_trả.HeaderText = "Phí hoàn trả";
@@ -426,6 +429,17 @@
             this.Mô_tả.Name = "Mô_tả";
             this.Mô_tả.Visible = false;
             // 
+            // btnQLDanhMuc
+            // 
+            this.btnQLDanhMuc.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.btnQLDanhMuc.Location = new System.Drawing.Point(676, 93);
+            this.btnQLDanhMuc.Name = "btnQLDanhMuc";
+            this.btnQLDanhMuc.Size = new System.Drawing.Size(115, 23);
+            this.btnQLDanhMuc.TabIndex = 1;
+            this.btnQLDanhMuc.Text = "QL danh mục đơn";
+            this.btnQLDanhMuc.UseVisualStyleBackColor = true;
+            this.btnQLDanhMuc.Click += new System.EventHandler(this.btnQLDanhMuc_Click);
+            // 
             // FrmCheckDon
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -437,6 +451,7 @@
             this.Controls.Add(this.dataGridView1);
             this.Controls.Add(this.btnSearch);
             this.Controls.Add(this.btnImportData);
+            this.Controls.Add(this.btnQLDanhMuc);
             this.Controls.Add(this.btnExport);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmCheckDon";
@@ -483,5 +498,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Ngày_đối_soát;
         private System.Windows.Forms.DataGridViewTextBoxColumn Đối_tác;
         private System.Windows.Forms.DataGridViewTextBoxColumn Mô_tả;
+        private System.Windows.Forms.Button btnQLDanhMuc;
     }
 }
