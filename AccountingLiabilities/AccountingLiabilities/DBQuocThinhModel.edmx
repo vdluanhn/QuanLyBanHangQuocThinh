@@ -5,6 +5,19 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EntityDBQuocThinhModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="DanhMucCauHinh">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="type" Type="nvarchar" MaxLength="50" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" />
+          <Property Name="name" Type="nvarchar" MaxLength="50" />
+          <Property Name="value" Type="nvarchar" MaxLength="50" />
+          <Property Name="description" Type="nvarchar(max)" />
+          <Property Name="status" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="created_date" Type="datetime" />
+        </EntityType>
         <EntityType Name="DoiSoatVanChuyen">
           <Key>
             <PropertyRef Name="code" />
@@ -47,6 +60,31 @@
           <Property Name="employee" Type="nvarchar" MaxLength="50" />
           <Property Name="partners" Type="nvarchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="NhapXuatTon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="product_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="color_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="size_code" Type="nvarchar" MaxLength="50" />
+          <Property Name="quantity" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="price" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="type" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="nxt_date" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="code" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="nvarchar" MaxLength="500" />
+          <Property Name="created_date" Type="datetime" />
+          <Property Name="supplier" Type="nvarchar" MaxLength="50" />
+          <Property Name="price" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -57,6 +95,10 @@
           <Property Name="version" Type="int" />
           <Property Name="definition" Type="varbinary(max)" />
         </EntityType>
+        <Function Name="PROC_SEARCH_DANHMUCCAUHINH" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_type" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="PROC_SEARCH_DOISOAT_BY_PARAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="v_partner" Type="varchar" Mode="In" />
           <Parameter Name="v_status" Type="varchar" Mode="In" />
@@ -82,10 +124,44 @@
           <Parameter Name="v_fromDateDS" Type="date" Mode="In" />
           <Parameter Name="v_toDateDS" Type="date" Mode="In" />
         </Function>
+        <Function Name="PROC_SEARCH_NHAPXUATTON" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_type" Type="numeric" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_NHAPXUATTON_SANPHAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
+        <Function Name="PROC_SEARCH_SANPHAM" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="v_keyword" Type="varchar" Mode="In" />
+          <Parameter Name="v_fromDate" Type="date" Mode="In" />
+          <Parameter Name="v_toDate" Type="date" Mode="In" />
+        </Function>
         <EntityContainer Name="EntityDBQuocThinhModelStoreContainer">
+          <EntitySet Name="DanhMucCauHinh" EntityType="Self.DanhMucCauHinh" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DoiSoatVanChuyen" EntityType="Self.DoiSoatVanChuyen" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonDaHoanTraThucTe" EntityType="Self.DonDaHoanTraThucTe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="DonDi" EntityType="Self.DonDi" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NhapXuatTon" EntityType="Self.NhapXuatTon" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SanPham" EntityType="Self.SanPham" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -121,6 +197,44 @@
             <Parameter Name="v_code" Mode="In" Type="String" />
             <Parameter Name="v_fromDateDS" Mode="In" Type="DateTime" />
             <Parameter Name="v_toDateDS" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <EntitySet Name="DanhMucCauHinhs" EntityType="EntityDBQuocThinhModel.DanhMucCauHinh" />
+          <EntitySet Name="NhapXuatTons" EntityType="EntityDBQuocThinhModel.NhapXuatTon" />
+          <EntitySet Name="SanPhams" EntityType="EntityDBQuocThinhModel.SanPham" />
+          <FunctionImport Name="PROC_SEARCH_DANHMUCCAUHINH" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_DANHMUCCAUHINH_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_type" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_NHAPXUATTON" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_type" Mode="In" Type="Decimal" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_SANPHAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_SANPHAM_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_NHAPXUATTON_SANPHAM" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAM_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
+          </FunctionImport>
+          <FunctionImport Name="PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE" ReturnType="Collection(EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE_Result)">
+            <Parameter Name="v_keyword" Mode="In" Type="String" />
+            <Parameter Name="v_fromDate" Mode="In" Type="DateTime" />
+            <Parameter Name="v_toDate" Mode="In" Type="DateTime" />
           </FunctionImport>
         </EntityContainer>
         <EntityType Name="DonDaHoanTraThucTe">
@@ -221,6 +335,113 @@
           <Property Type="String" Name="org_delivery" Nullable="true" MaxLength="50" />
           <Property Type="DateTime" Name="cross_check_date" Nullable="true" />
           <Property Type="String" Name="partners" Nullable="true" MaxLength="50" />
+        </ComplexType>
+        <EntityType Name="DanhMucCauHinh">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="value" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="status" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="NhapXuatTon">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="product_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="color_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="size_code" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="quantity" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="type" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="nxt_date" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="SanPham">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="created_date" Type="DateTime" Precision="3" />
+          <Property Name="supplier" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="price" Type="Decimal" Precision="18" Scale="0" />
+        </EntityType>
+        <ComplexType Name="PROC_SEARCH_DANHMUCCAUHINH_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="type" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="value" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="description" Nullable="true" />
+          <Property Type="Decimal" Name="status" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_NHAPXUATTON_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="product_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="color_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="size_code" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="quantity" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Decimal" Name="type" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="nxt_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="product_name" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="color" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="size" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="type_name" Nullable="false" MaxLength="14" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_SANPHAM_Result">
+          <Property Type="Decimal" Name="id" Nullable="false" Precision="18" Scale="0" />
+          <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
+          <Property Type="DateTime" Name="created_date" Nullable="true" Precision="23" />
+          <Property Type="String" Name="supplier" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="price" Nullable="true" Precision="18" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_NHAPXUATTON_SANPHAM_Result">
+          <Property Type="String" Name="code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
+          <Property Type="Decimal" Name="slTonDau" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slNhap" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slXuat" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slTon" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE_Result">
+          <Property Type="String" Name="product_code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="color_code" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="size_code" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="slTonDau" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slNhap" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slXuat" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slTon" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR_Result">
+          <Property Type="String" Name="product_code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="color_code" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="slTonDau" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slNhap" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slXuat" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slTon" Nullable="true" Precision="38" Scale="0" />
+        </ComplexType>
+        <ComplexType Name="PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE_Result">
+          <Property Type="String" Name="product_code" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="name" Nullable="true" MaxLength="500" />
+          <Property Type="String" Name="size_code" Nullable="true" MaxLength="50" />
+          <Property Type="Decimal" Name="slTonDau" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slNhap" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slXuat" Nullable="true" Precision="38" Scale="0" />
+          <Property Type="Decimal" Name="slTon" Nullable="true" Precision="38" Scale="0" />
         </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
@@ -344,6 +565,144 @@
                 <ScalarProperty Name="org_delivery" ColumnName="org_delivery" />
                 <ScalarProperty Name="cross_check_date" ColumnName="cross_check_date" />
                 <ScalarProperty Name="partners" ColumnName="partners" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <EntitySetMapping Name="DanhMucCauHinhs">
+            <EntityTypeMapping TypeName="EntityDBQuocThinhModel.DanhMucCauHinh">
+              <MappingFragment StoreEntitySet="DanhMucCauHinh">
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NhapXuatTons">
+            <EntityTypeMapping TypeName="EntityDBQuocThinhModel.NhapXuatTon">
+              <MappingFragment StoreEntitySet="NhapXuatTon">
+                <ScalarProperty Name="nxt_date" ColumnName="nxt_date" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="size_code" ColumnName="size_code" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="product_code" ColumnName="product_code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SanPhams">
+            <EntityTypeMapping TypeName="EntityDBQuocThinhModel.SanPham">
+              <MappingFragment StoreEntitySet="SanPham">
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="id" ColumnName="id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_DANHMUCCAUHINH" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_DANHMUCCAUHINH">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_DANHMUCCAUHINH_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="value" ColumnName="value" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_NHAPXUATTON" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_NHAPXUATTON">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_code" ColumnName="product_code" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="size_code" ColumnName="size_code" />
+                <ScalarProperty Name="quantity" ColumnName="quantity" />
+                <ScalarProperty Name="price" ColumnName="price" />
+                <ScalarProperty Name="type" ColumnName="type" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="nxt_date" ColumnName="nxt_date" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="color" ColumnName="color" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="type_name" ColumnName="type_name" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_SANPHAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_SANPHAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_SANPHAM_Result">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="created_date" ColumnName="created_date" />
+                <ScalarProperty Name="supplier" ColumnName="supplier" />
+                <ScalarProperty Name="price" ColumnName="price" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_NHAPXUATTON_SANPHAM" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_NHAPXUATTON_SANPHAM">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAM_Result">
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="slTonDau" ColumnName="slTonDau" />
+                <ScalarProperty Name="slNhap" ColumnName="slNhap" />
+                <ScalarProperty Name="slXuat" ColumnName="slXuat" />
+                <ScalarProperty Name="slTon" ColumnName="slTon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE_Result">
+                <ScalarProperty Name="product_code" ColumnName="product_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="size_code" ColumnName="size_code" />
+                <ScalarProperty Name="slTonDau" ColumnName="slTonDau" />
+                <ScalarProperty Name="slNhap" ColumnName="slNhap" />
+                <ScalarProperty Name="slXuat" ColumnName="slXuat" />
+                <ScalarProperty Name="slTon" ColumnName="slTon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR_Result">
+                <ScalarProperty Name="product_code" ColumnName="product_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="color_code" ColumnName="color_code" />
+                <ScalarProperty Name="slTonDau" ColumnName="slTonDau" />
+                <ScalarProperty Name="slNhap" ColumnName="slNhap" />
+                <ScalarProperty Name="slXuat" ColumnName="slXuat" />
+                <ScalarProperty Name="slTon" ColumnName="slTon" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE" FunctionName="EntityDBQuocThinhModel.Store.PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="EntityDBQuocThinhModel.PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE_Result">
+                <ScalarProperty Name="product_code" ColumnName="product_code" />
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="size_code" ColumnName="size_code" />
+                <ScalarProperty Name="slTonDau" ColumnName="slTonDau" />
+                <ScalarProperty Name="slNhap" ColumnName="slNhap" />
+                <ScalarProperty Name="slXuat" ColumnName="slXuat" />
+                <ScalarProperty Name="slTon" ColumnName="slTon" />
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>

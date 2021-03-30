@@ -15,7 +15,7 @@ namespace AccountingLiabilities
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new FrmCheckDon());
+            Application.Run(new FrmHome());
         }
     }
 }

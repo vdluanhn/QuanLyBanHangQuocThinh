@@ -31,6 +31,9 @@ namespace AccountingLiabilities
         public virtual DbSet<sysdiagram> sysdiagrams { get; set; }
         public virtual DbSet<DoiSoatVanChuyen> DoiSoatVanChuyens { get; set; }
         public virtual DbSet<DonDi> DonDis { get; set; }
+        public virtual DbSet<DanhMucCauHinh> DanhMucCauHinhs { get; set; }
+        public virtual DbSet<NhapXuatTon> NhapXuatTons { get; set; }
+        public virtual DbSet<SanPham> SanPhams { get; set; }
     
         public virtual ObjectResult<PROC_SEARCH_DOISOAT_BY_PARAM_Result> PROC_SEARCH_DOISOAT_BY_PARAM(string v_partner, string v_status, string v_code, Nullable<System.DateTime> v_fromDateDS, Nullable<System.DateTime> v_toDateDS)
         {
@@ -118,6 +121,125 @@ namespace AccountingLiabilities
                 new ObjectParameter("v_toDateDS", typeof(System.DateTime));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result>("PROC_SEARCH_DONHOANTHUC_BY_PARAM", v_partnerParameter, v_codeParameter, v_fromDateDSParameter, v_toDateDSParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_DANHMUCCAUHINH_Result> PROC_SEARCH_DANHMUCCAUHINH(string v_keyword, string v_type)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_typeParameter = v_type != null ?
+                new ObjectParameter("v_type", v_type) :
+                new ObjectParameter("v_type", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_DANHMUCCAUHINH_Result>("PROC_SEARCH_DANHMUCCAUHINH", v_keywordParameter, v_typeParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_NHAPXUATTON_Result> PROC_SEARCH_NHAPXUATTON(string v_keyword, Nullable<decimal> v_type, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_typeParameter = v_type.HasValue ?
+                new ObjectParameter("v_type", v_type) :
+                new ObjectParameter("v_type", typeof(decimal));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_NHAPXUATTON_Result>("PROC_SEARCH_NHAPXUATTON", v_keywordParameter, v_typeParameter, v_fromDateParameter, v_toDateParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_SANPHAM_Result> PROC_SEARCH_SANPHAM(string v_keyword, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_SANPHAM_Result>("PROC_SEARCH_SANPHAM", v_keywordParameter, v_fromDateParameter, v_toDateParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_NHAPXUATTON_SANPHAM_Result> PROC_SEARCH_NHAPXUATTON_SANPHAM(string v_keyword, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_NHAPXUATTON_SANPHAM_Result>("PROC_SEARCH_NHAPXUATTON_SANPHAM", v_keywordParameter, v_fromDateParameter, v_toDateParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE_Result> PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE(string v_keyword, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE_Result>("PROC_SEARCH_NHAPXUATTON_SANPHAMCOLORSIZE", v_keywordParameter, v_fromDateParameter, v_toDateParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR_Result> PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR(string v_keyword, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR_Result>("PROC_SEARCH_NHAPXUATTON_SANPHAMCOLOR", v_keywordParameter, v_fromDateParameter, v_toDateParameter);
+        }
+    
+        public virtual ObjectResult<PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE_Result> PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE(string v_keyword, Nullable<System.DateTime> v_fromDate, Nullable<System.DateTime> v_toDate)
+        {
+            var v_keywordParameter = v_keyword != null ?
+                new ObjectParameter("v_keyword", v_keyword) :
+                new ObjectParameter("v_keyword", typeof(string));
+    
+            var v_fromDateParameter = v_fromDate.HasValue ?
+                new ObjectParameter("v_fromDate", v_fromDate) :
+                new ObjectParameter("v_fromDate", typeof(System.DateTime));
+    
+            var v_toDateParameter = v_toDate.HasValue ?
+                new ObjectParameter("v_toDate", v_toDate) :
+                new ObjectParameter("v_toDate", typeof(System.DateTime));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE_Result>("PROC_SEARCH_NHAPXUATTON_SANPHAMSIZE", v_keywordParameter, v_fromDateParameter, v_toDateParameter);
         }
     }
 }
