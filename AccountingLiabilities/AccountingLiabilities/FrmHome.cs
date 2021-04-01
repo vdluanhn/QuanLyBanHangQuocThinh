@@ -24,7 +24,7 @@ namespace AccountingLiabilities
 
         private void btnNhapKho_Click(object sender, EventArgs e)
         {
-            FrmNhapHang nhapHang = new FrmNhapHang();
+            FrmNhapHang nhapHang = new FrmNhapHang(2);
             nhapHang.Show();
         }
 
@@ -36,7 +36,7 @@ namespace AccountingLiabilities
 
         private void btnXuatKho_Click(object sender, EventArgs e)
         {
-            FrmXuatHang xuatHang = new FrmXuatHang();
+            FrmXuatHang xuatHang = new FrmXuatHang(3);
             xuatHang.ShowDialog();
         }
 

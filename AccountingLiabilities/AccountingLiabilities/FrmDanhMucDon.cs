@@ -15,9 +15,9 @@ namespace AccountingLiabilities
         public FrmDanhMucDon()
         {
             InitializeComponent();
-            datePickStart.Value = DateTime.Now.AddDays(-30);
-            dtPickerDSStart.Value = DateTime.Now.AddDays(-30);
-            dtHTStart.Value = DateTime.Now.AddDays(-30);
+            datePickStart.Value = DateTime.Now.Date.AddDays(-30);
+            dtPickerDSStart.Value = DateTime.Now.Date.AddDays(-30);
+            dtHTStart.Value = DateTime.Now.Date.AddDays(-30);
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -30,8 +30,8 @@ namespace AccountingLiabilities
                     partner = "TATCA";
                 }
                 string code = txtMaDonHang.Text.Trim();
-                DateTime fromDate = datePickStart.Value;
-                DateTime toDate = datePickerEnd.Value;
+                DateTime fromDate = datePickStart.Value.Date;
+                DateTime toDate = datePickerEnd.Value.Date.AddDays(1);
                 using (var db = new DBQuocThinhEntities())
                 {
                     var datas = db.PROC_SEARCH_DONDI_BY_PARAM(partner, code, fromDate, toDate).OrderByDescending(x=>x.id); 
@@ -63,27 +63,52 @@ namespace AccountingLiabilities
         {
             try
             {
-                if (itemSelected == null)
+                if (dataGridView1.SelectedRows.Count < 1)
                 {
-                    MessageBox.Show("Vui lòng chọn một đơn hàng cần xóa.", "Thông báo");
+                    MessageBox.Show("Vui lòng chọn ít nhất một bản ghi cần xóa.", "Thông báo");
+                    return;
                 }
-                else
+                int n = dataGridView1.SelectedRows.Count;
+                if (MessageBox.Show("Are you sure that you want to delete " + dataGridView1.SelectedRows.Count + " item selected", "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
                 {
-                    if (MessageBox.Show("Are you sure that you want to delete this item with code: " + itemSelected.Mã_đơn_hàng + " and id = " + itemSelected.id + "?", "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                    foreach (DataGridViewRow obj in this.dataGridView1.SelectedRows)
                     {
+                        var item = (PROC_SEARCH_DONDI_BY_PARAM_Result)obj.DataBoundItem;
                         using (var db = new DBQuocThinhEntities())
                         {
-                            var data = db.DonDis.Where(x => x.id == itemSelected.id).FirstOrDefault();
+                            var data = db.DonDis.Where(x => x.id == item.id).FirstOrDefault();
                             if (data != null)
                             {
                                 db.DonDis.Remove(data as DonDi);
                                 db.SaveChanges();
+                                Console.WriteLine("Xóa thành công bản ghi " + itemSelected.Mã_đơn_hàng + " có id = " + itemSelected.id + ".");
                             }
-                            btnSearch_Click(sender, e);
-                            MessageBox.Show("Xóa thành công mã đơn hàng " + itemSelected.Mã_đơn_hàng + " có id = "+itemSelected.id+".");
                         }
                     }
+                    MessageBox.Show("Xóa thành công " + n + " bản ghi.");
+                    btnSearch_Click(sender, e);
                 }
+                //if (itemSelected == null)
+                //{
+                //    MessageBox.Show("Vui lòng chọn một đơn hàng cần xóa.", "Thông báo");
+                //}
+                //else
+                //{
+                //    if (MessageBox.Show("Are you sure that you want to delete this item with code: " + itemSelected.Mã_đơn_hàng + " and id = " + itemSelected.id + "?", "Thông báo", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                //    {
+                //        using (var db = new DBQuocThinhEntities())
+                //        {
+                //            var data = db.DonDis.Where(x => x.id == itemSelected.id).FirstOrDefault();
+                //            if (data != null)
+                //            {
+                //                db.DonDis.Remove(data as DonDi);
+                //                db.SaveChanges();
+                //            }
+                //            MessageBox.Show("Xóa thành công mã đơn hàng " + itemSelected.Mã_đơn_hàng + " có id = "+itemSelected.id+".");
+                //            btnSearch_Click(sender, e);
+                //        }
+                //    }
+                //}
             }
             catch (Exception ex)
             {
@@ -102,8 +127,8 @@ namespace AccountingLiabilities
                     partner = "TATCA";
                 }
                 string code = txtMaDonHang.Text.Trim();
-                DateTime fromDate = dtPickerDSStart.Value;
-                DateTime toDate = dtPickerDSEnd.Value;
+                DateTime fromDate = dtPickerDSStart.Value.Date;
+                DateTime toDate = dtPickerDSEnd.Value.Date.AddDays(1);
                 using (var db = new DBQuocThinhEntities())
                 {
                     var datas = db.PROC_SEARCH_DONDOISOAT_BY_PARAM(partner, code, fromDate, toDate).OrderByDescending(x => x.id);
@@ -155,7 +180,10 @@ namespace AccountingLiabilities
         private void dataGridView2_SelectionChanged(object sender, EventArgs e)
         {
             itemDSSelected = (PROC_SEARCH_DONDOISOAT_BY_PARAM_Result)dataGridView2.CurrentRow.DataBoundItem;
-            Console.WriteLine(itemDSSelected.id);
+            if (itemSelected != null)
+            {
+                Console.WriteLine(itemSelected.id);
+            }
         }
 
         PROC_SEARCH_DONHOANTHUC_BY_PARAM_Result itemHTSelected = null;
@@ -176,8 +204,8 @@ namespace AccountingLiabilities
                     partner = "TATCA";
                 }
                 string code = txtCodeHT.Text.Trim();
-                DateTime fromDate = dtHTStart.Value;
-                DateTime toDate = dtHTEnd.Value;
+                DateTime fromDate = dtHTStart.Value.Date;
+                DateTime toDate = dtHTEnd.Value.Date.AddDays(1);
                 using (var db = new DBQuocThinhEntities())
                 {
                     var datas = db.PROC_SEARCH_DONHOANTHUC_BY_PARAM(partner, code, fromDate, toDate).OrderByDescending(x => x.id);

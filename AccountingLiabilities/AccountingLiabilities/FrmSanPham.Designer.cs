@@ -39,6 +39,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.btnAdd = new System.Windows.Forms.Button();
             this.btnClose = new System.Windows.Forms.Button();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -128,7 +129,7 @@
             // 
             // btnAdd
             // 
-            this.btnAdd.Location = new System.Drawing.Point(315, 153);
+            this.btnAdd.Location = new System.Drawing.Point(271, 153);
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.Size = new System.Drawing.Size(75, 23);
             this.btnAdd.TabIndex = 5;
@@ -138,13 +139,23 @@
             // 
             // btnClose
             // 
-            this.btnClose.Location = new System.Drawing.Point(411, 153);
+            this.btnClose.Location = new System.Drawing.Point(455, 153);
             this.btnClose.Name = "btnClose";
             this.btnClose.Size = new System.Drawing.Size(75, 23);
             this.btnClose.TabIndex = 6;
             this.btnClose.Text = "Hủy bỏ";
             this.btnClose.UseVisualStyleBackColor = true;
             this.btnClose.Click += new System.EventHandler(this.btnClose_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(363, 153);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 5;
+            this.btnDelete.Text = "Xóa";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // FrmSanPham
             // 
@@ -153,6 +164,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 205);
             this.Controls.Add(this.btnClose);
+            this.Controls.Add(this.btnDelete);
             this.Controls.Add(this.btnAdd);
             this.Controls.Add(this.groupBox1);
             this.MaximumSize = new System.Drawing.Size(816, 244);
@@ -179,5 +191,6 @@
         private System.Windows.Forms.Button btnAdd;
         private System.Windows.Forms.Button btnClose;
         private System.Windows.Forms.TextBox txtPrice;
+        private System.Windows.Forms.Button btnDelete;
     }
 }

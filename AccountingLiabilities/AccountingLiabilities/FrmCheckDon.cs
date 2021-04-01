@@ -29,8 +29,8 @@ namespace AccountingLiabilities
             {
                 var item = cbCheckCondition.Text;
                 Console.WriteLine(item);
-                var startDate = datePickStart.Value.AddDays(-1);
-                var endDate = datePickerEnd.Value.AddDays(1);
+                DateTime startDate = datePickStart.Value.Date;
+                DateTime endDate = datePickerEnd.Value.Date.AddDays(1);
                 //var obj = DBHelper.SelectDonDiHoanThanh();
                 using (var db = new DBQuocThinhEntities())
                 {

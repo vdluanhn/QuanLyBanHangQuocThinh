@@ -34,6 +34,7 @@
             this.btnQLTonKho = new System.Windows.Forms.Button();
             this.btnDanhMuc = new System.Windows.Forms.Button();
             this.btnAddSP = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnNhapKho
@@ -42,7 +43,7 @@
             this.btnNhapKho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnNhapKho.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnNhapKho.ForeColor = System.Drawing.Color.Blue;
-            this.btnNhapKho.Location = new System.Drawing.Point(411, 51);
+            this.btnNhapKho.Location = new System.Drawing.Point(411, 103);
             this.btnNhapKho.Name = "btnNhapKho";
             this.btnNhapKho.Size = new System.Drawing.Size(193, 125);
             this.btnNhapKho.TabIndex = 0;
@@ -56,7 +57,7 @@
             this.btnXuatKho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnXuatKho.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnXuatKho.ForeColor = System.Drawing.Color.Blue;
-            this.btnXuatKho.Location = new System.Drawing.Point(723, 51);
+            this.btnXuatKho.Location = new System.Drawing.Point(723, 103);
             this.btnXuatKho.Name = "btnXuatKho";
             this.btnXuatKho.Size = new System.Drawing.Size(193, 125);
             this.btnXuatKho.TabIndex = 0;
@@ -70,7 +71,7 @@
             this.btnDoiSoat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnDoiSoat.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDoiSoat.ForeColor = System.Drawing.Color.Blue;
-            this.btnDoiSoat.Location = new System.Drawing.Point(411, 276);
+            this.btnDoiSoat.Location = new System.Drawing.Point(411, 328);
             this.btnDoiSoat.Name = "btnDoiSoat";
             this.btnDoiSoat.Size = new System.Drawing.Size(193, 125);
             this.btnDoiSoat.TabIndex = 0;
@@ -84,7 +85,7 @@
             this.btnQLTonKho.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnQLTonKho.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnQLTonKho.ForeColor = System.Drawing.Color.Blue;
-            this.btnQLTonKho.Location = new System.Drawing.Point(105, 51);
+            this.btnQLTonKho.Location = new System.Drawing.Point(105, 103);
             this.btnQLTonKho.Name = "btnQLTonKho";
             this.btnQLTonKho.Size = new System.Drawing.Size(193, 125);
             this.btnQLTonKho.TabIndex = 0;
@@ -98,7 +99,7 @@
             this.btnDanhMuc.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnDanhMuc.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnDanhMuc.ForeColor = System.Drawing.Color.Blue;
-            this.btnDanhMuc.Location = new System.Drawing.Point(723, 276);
+            this.btnDanhMuc.Location = new System.Drawing.Point(723, 328);
             this.btnDanhMuc.Name = "btnDanhMuc";
             this.btnDanhMuc.Size = new System.Drawing.Size(193, 125);
             this.btnDanhMuc.TabIndex = 0;
@@ -112,7 +113,7 @@
             this.btnAddSP.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.btnAddSP.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.btnAddSP.ForeColor = System.Drawing.Color.Blue;
-            this.btnAddSP.Location = new System.Drawing.Point(105, 276);
+            this.btnAddSP.Location = new System.Drawing.Point(105, 328);
             this.btnAddSP.Name = "btnAddSP";
             this.btnAddSP.Size = new System.Drawing.Size(193, 125);
             this.btnAddSP.TabIndex = 0;
@@ -120,12 +121,26 @@
             this.btnAddSP.UseVisualStyleBackColor = false;
             this.btnAddSP.Click += new System.EventHandler(this.btnAddSP_Click);
             // 
+            // label1
+            // 
+            this.label1.Anchor = System.Windows.Forms.AnchorStyles.Top;
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.Transparent;
+            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label1.ForeColor = System.Drawing.SystemColors.HotTrack;
+            this.label1.Location = new System.Drawing.Point(308, 31);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(405, 29);
+            this.label1.TabIndex = 1;
+            this.label1.Text = "PHẦN MỀM QUẢN LÝ BÁN HÀNG";
+            // 
             // FrmHome
             // 
             this.AcceptButton = this.btnQLTonKho;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1021, 555);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.btnDanhMuc);
             this.Controls.Add(this.btnAddSP);
             this.Controls.Add(this.btnDoiSoat);
@@ -134,8 +149,9 @@
             this.Controls.Add(this.btnNhapKho);
             this.Name = "FrmHome";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmHome";
+            this.Text = "Quản lý bán hàng";
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -147,5 +163,6 @@
         private System.Windows.Forms.Button btnQLTonKho;
         private System.Windows.Forms.Button btnDanhMuc;
         private System.Windows.Forms.Button btnAddSP;
+        private System.Windows.Forms.Label label1;
     }
 }

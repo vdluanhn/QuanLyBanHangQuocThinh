@@ -29,23 +29,23 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.txtPrice = new System.Windows.Forms.TextBox();
-            this.cbbProduct = new System.Windows.Forms.ComboBox();
-            this.cbbColor = new System.Windows.Forms.ComboBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.cbbSize = new System.Windows.Forms.ComboBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.txtQuantity = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.cbbType = new System.Windows.Forms.ComboBox();
             this.dtNXT = new System.Windows.Forms.DateTimePicker();
+            this.btnAddSP = new System.Windows.Forms.Button();
+            this.cbbType = new System.Windows.Forms.ComboBox();
+            this.cbbColor = new System.Windows.Forms.ComboBox();
+            this.cbbSize = new System.Windows.Forms.ComboBox();
+            this.cbbProduct = new System.Windows.Forms.ComboBox();
+            this.txtQuantity = new System.Windows.Forms.TextBox();
+            this.txtPrice = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.btnClose = new System.Windows.Forms.Button();
             this.btnAdd = new System.Windows.Forms.Button();
-            this.btnAddSP = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -73,100 +73,24 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Thông tin nhập xuất";
             // 
-            // label1
+            // dtNXT
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(23, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "Sản phẩm";
+            this.dtNXT.CustomFormat = "dd/MM/yyyy";
+            this.dtNXT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.dtNXT.Location = new System.Drawing.Point(90, 91);
+            this.dtNXT.Name = "dtNXT";
+            this.dtNXT.Size = new System.Drawing.Size(262, 20);
+            this.dtNXT.TabIndex = 6;
             // 
-            // txtPrice
+            // btnAddSP
             // 
-            this.txtPrice.Location = new System.Drawing.Point(476, 56);
-            this.txtPrice.Name = "txtPrice";
-            this.txtPrice.Size = new System.Drawing.Size(262, 20);
-            this.txtPrice.TabIndex = 5;
-            this.txtPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrice_KeyPress);
-            // 
-            // cbbProduct
-            // 
-            this.cbbProduct.FormattingEnabled = true;
-            this.cbbProduct.Location = new System.Drawing.Point(90, 21);
-            this.cbbProduct.Name = "cbbProduct";
-            this.cbbProduct.Size = new System.Drawing.Size(262, 21);
-            this.cbbProduct.TabIndex = 1;
-            this.cbbProduct.SelectedValueChanged += new System.EventHandler(this.cbbProduct_SelectedValueChanged);
-            // 
-            // cbbColor
-            // 
-            this.cbbColor.FormattingEnabled = true;
-            this.cbbColor.Location = new System.Drawing.Point(476, 21);
-            this.cbbColor.Name = "cbbColor";
-            this.cbbColor.Size = new System.Drawing.Size(141, 21);
-            this.cbbColor.TabIndex = 2;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(419, 25);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(28, 13);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Màu";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(623, 25);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(45, 13);
-            this.label3.TabIndex = 0;
-            this.label3.Text = "Kích cỡ";
-            // 
-            // cbbSize
-            // 
-            this.cbbSize.FormattingEnabled = true;
-            this.cbbSize.Location = new System.Drawing.Point(674, 21);
-            this.cbbSize.Name = "cbbSize";
-            this.cbbSize.Size = new System.Drawing.Size(64, 21);
-            this.cbbSize.TabIndex = 3;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(23, 60);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(49, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Số lượng";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(419, 60);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(44, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Đơn giá";
-            // 
-            // txtQuantity
-            // 
-            this.txtQuantity.Location = new System.Drawing.Point(90, 56);
-            this.txtQuantity.Name = "txtQuantity";
-            this.txtQuantity.Size = new System.Drawing.Size(262, 20);
-            this.txtQuantity.TabIndex = 4;
-            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQuantity_KeyPress);
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(419, 95);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(27, 13);
-            this.label6.TabIndex = 0;
-            this.label6.Text = "Loại";
+            this.btnAddSP.Location = new System.Drawing.Point(358, 20);
+            this.btnAddSP.Name = "btnAddSP";
+            this.btnAddSP.Size = new System.Drawing.Size(43, 23);
+            this.btnAddSP.TabIndex = 3;
+            this.btnAddSP.Text = "Thêm";
+            this.btnAddSP.UseVisualStyleBackColor = true;
+            this.btnAddSP.Click += new System.EventHandler(this.btnAddSP_Click);
             // 
             // cbbType
             // 
@@ -180,14 +104,73 @@
             this.cbbType.TabIndex = 7;
             this.cbbType.Text = "Nhập hàng";
             // 
-            // dtNXT
+            // cbbColor
             // 
-            this.dtNXT.CustomFormat = "dd/MM/yyyy";
-            this.dtNXT.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
-            this.dtNXT.Location = new System.Drawing.Point(90, 91);
-            this.dtNXT.Name = "dtNXT";
-            this.dtNXT.Size = new System.Drawing.Size(262, 20);
-            this.dtNXT.TabIndex = 6;
+            this.cbbColor.FormattingEnabled = true;
+            this.cbbColor.Location = new System.Drawing.Point(476, 21);
+            this.cbbColor.Name = "cbbColor";
+            this.cbbColor.Size = new System.Drawing.Size(141, 21);
+            this.cbbColor.TabIndex = 2;
+            // 
+            // cbbSize
+            // 
+            this.cbbSize.FormattingEnabled = true;
+            this.cbbSize.Location = new System.Drawing.Point(674, 21);
+            this.cbbSize.Name = "cbbSize";
+            this.cbbSize.Size = new System.Drawing.Size(64, 21);
+            this.cbbSize.TabIndex = 3;
+            // 
+            // cbbProduct
+            // 
+            this.cbbProduct.FormattingEnabled = true;
+            this.cbbProduct.Location = new System.Drawing.Point(90, 21);
+            this.cbbProduct.Name = "cbbProduct";
+            this.cbbProduct.Size = new System.Drawing.Size(262, 21);
+            this.cbbProduct.TabIndex = 1;
+            this.cbbProduct.SelectedValueChanged += new System.EventHandler(this.cbbProduct_SelectedValueChanged);
+            // 
+            // txtQuantity
+            // 
+            this.txtQuantity.Location = new System.Drawing.Point(90, 56);
+            this.txtQuantity.Name = "txtQuantity";
+            this.txtQuantity.Size = new System.Drawing.Size(262, 20);
+            this.txtQuantity.TabIndex = 4;
+            this.txtQuantity.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtQuantity_KeyPress);
+            // 
+            // txtPrice
+            // 
+            this.txtPrice.Location = new System.Drawing.Point(476, 56);
+            this.txtPrice.Name = "txtPrice";
+            this.txtPrice.Size = new System.Drawing.Size(262, 20);
+            this.txtPrice.TabIndex = 5;
+            this.txtPrice.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txtPrice_KeyPress);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(419, 60);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(44, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "Đơn giá";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(623, 25);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(45, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "Kích cỡ";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(419, 95);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(27, 13);
+            this.label6.TabIndex = 0;
+            this.label6.Text = "Loại";
             // 
             // label7
             // 
@@ -197,6 +180,33 @@
             this.label7.Size = new System.Drawing.Size(50, 13);
             this.label7.TabIndex = 0;
             this.label7.Text = "Ngày TH";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(23, 60);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(49, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Số lượng";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(419, 25);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(28, 13);
+            this.label2.TabIndex = 0;
+            this.label2.Text = "Màu";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(23, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "Sản phẩm";
             // 
             // btnClose
             // 
@@ -218,16 +228,6 @@
             this.btnAdd.UseVisualStyleBackColor = true;
             this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
             // 
-            // btnAddSP
-            // 
-            this.btnAddSP.Location = new System.Drawing.Point(358, 20);
-            this.btnAddSP.Name = "btnAddSP";
-            this.btnAddSP.Size = new System.Drawing.Size(43, 23);
-            this.btnAddSP.TabIndex = 3;
-            this.btnAddSP.Text = "Thêm";
-            this.btnAddSP.UseVisualStyleBackColor = true;
-            this.btnAddSP.Click += new System.EventHandler(this.btnAddSP_Click);
-            // 
             // FrmNhapXuat
             // 
             this.AcceptButton = this.btnAdd;
@@ -241,7 +241,7 @@
             this.MinimumSize = new System.Drawing.Size(816, 248);
             this.Name = "FrmNhapXuat";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "FrmNhapXuat";
+            this.Text = "Thêm thông tin nhập xuất hàng";
             this.Load += new System.EventHandler(this.FrmNhapXuat_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();

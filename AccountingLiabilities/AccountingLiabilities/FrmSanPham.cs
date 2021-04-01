@@ -62,5 +62,35 @@ namespace AccountingLiabilities
         {
 
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (String.IsNullOrEmpty(txtCode.Text))
+                {
+                    MessageBox.Show("Vui lòng nhập mã sản phẩm muốn xóa.","Thông báo");
+                    txtCode.Focus();
+                    return;
+                }
+                using (var db = new DBQuocThinhEntities())
+                {
+                    var sp = db.SanPhams.Where(x => x.code == txtCode.Text.Trim().ToUpper()).ToList();
+                    if (sp==null||sp.Count==0)
+                    {
+                        MessageBox.Show("Không tồn tại mã sản phẩm "+txtCode.Text+" trên hệ thống.", "Thông báo");
+                        txtCode.Focus();
+                        return;
+                    }
+                    var datas = db.SanPhams.RemoveRange(sp);
+                    db.SaveChanges();
+                    MessageBox.Show("Xóa thành công sản phẩm: " + sp.SingleOrDefault().code);
+                }
+            }
+            catch (Exception exx)
+            {
+                MessageBox.Show("Có lỗi xảy ra. Chi tiết: " + exx.ToString());
+            }
+        }
     }
 }

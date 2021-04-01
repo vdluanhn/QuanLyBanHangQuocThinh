@@ -148,6 +148,12 @@
     <Compile Include="FrmNhapXuat.Designer.cs">
       <DependentUpon>FrmNhapXuat.cs</DependentUpon>
     </Compile>
+    <Compile Include="FrmNhapXuatExecl.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrmNhapXuatExecl.Designer.cs">
+      <DependentUpon>FrmNhapXuatExecl.cs</DependentUpon>
+    </Compile>
     <Compile Include="FrmNhapXuatTon.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +243,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FrmNhapXuat.resx">
       <DependentUpon>FrmNhapXuat.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrmNhapXuatExecl.resx">
+      <DependentUpon>FrmNhapXuatExecl.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FrmNhapXuatTon.resx">
       <DependentUpon>FrmNhapXuatTon.cs</DependentUpon>
