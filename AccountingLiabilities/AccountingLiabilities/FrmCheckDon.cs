@@ -37,7 +37,7 @@ namespace AccountingLiabilities
                     var datas = db.PROC_SEARCH_DOISOAT_BY_PARAM(cbbPartner.Text, Utils.getCodeByStatusName(cbCheckCondition.Text.Trim()),txtMaDonHang.Text.Trim(),startDate, endDate);
                     
                             dataGridView1.DataSource = datas.ToList();
-                    Utils.themSTT(dataGridView1);
+                    //Utils.themSTT(dataGridView1);
                      lbKQTK.Text = "Đã tìm thấy " + dataGridView1.Rows.Count + " kết quả!";
                 }
             }
